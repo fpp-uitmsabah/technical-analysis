@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Assessment - Technical Analysis Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .question-card { transition: all 0.3s ease; }
+        .question-card.active { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .option-button { transition: all 0.2s ease; }
+        .option-button:hover { transform: translateY(-2px); }
+        .option-button.selected { background-color: #dbeafe; border-color: #3b82f6; }
+        .option-button.correct { background-color: #dcfce7; border-color: #16a34a; }
+        .option-button.incorrect { background-color: #fee2e2; border-color: #dc2626; }
+        .progress-ring { transform: rotate(-90deg); }
+        .progress-ring circle { transition: stroke-dashoffset 0.35s; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Final Assessment</h1>
+                        <p class="text-sm text-gray-600">Test your technical analysis knowledge</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        Question <span id="current-question">1</span> of <span id="total-questions">10</span>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        Score: <span id="current-score">0</span>/<span id="total-score">10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 10%" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Assessment Header -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8 text-center">
+                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-graduation-cap text-blue-600 text-3xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Final Assessment</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    Complete this comprehensive assessment to earn your Technical Analysis Mastery certificate.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-blue-600">10</div>
+                        <div class="text-sm text-gray-600">Questions</div>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-green-600">70%</div>
+                        <div class="text-sm text-gray-600">Passing Score</div>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-purple-600">30</div>
+                        <div class="text-sm text-gray-600">Minutes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8 question-card active" id="question-card">
+            <div class="p-8">
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3" id="question-text">
+                        What is the primary assumption of technical analysis that states all known information is already reflected in price?
+                    </h3>
+                    <div class="text-sm text-gray-600">
+                        Question <span id="question-number">1</span> of 10
+                    </div>
+                </div>
+
+                <div class="space-y-4" id="options-container">
+                    <button class="option-button w-full p-4 border border-gray-200 rounded-lg text-left hover:bg-gray-50" data-answer="a">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                            </div>
+                            <span>Price moves in trends</span>
+                        </div>
+                    </button>
+                    <button class="option-button w-full p-4 border border-gray-200 rounded-lg text-left hover:bg-gray-50" data-answer="b">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                            </div>
+                            <span>Market discounts everything</span>
+                        </div>
+                    </button>
+                    <button class="option-button w-full p-4 border border-gray-200 rounded-lg text-left hover:bg-gray-50" data-answer="c">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                            </div>
+                            <span>History repeats itself</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="mt-6 p-4 rounded-lg hidden" id="feedback-container">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle text-blue-600 mr-3 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Explanation</h4>
+                            <p class="text-gray-700 text-sm" id="feedback-text">
+                                The "market discounts everything" assumption means that all known information, including fundamental factors, is already reflected in the current price.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="previousQuestion()" id="prev-btn" class="px-6 py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 hidden">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Previous
+            </button>
+            <div></div>
+            <button onclick="nextQuestion()" id="next-btn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Next Question
+                <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+            <button onclick="submitAssessment()" id="submit-btn" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 hidden">
+                Submit Assessment
+                <i class="fas fa-check ml-2"></i>
+            </button>
+        </div>
+
+        <!-- Results Modal -->
+        <div id="results-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-trophy text-green-600 text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Assessment Complete!</h3>
+                    <div class="mb-6">
+                        <div class="text-4xl font-bold text-blue-600 mb-2" id="final-score">85%</div>
+                        <p class="text-gray-600">Your Score</p>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Correct Answers:</span>
+                            <span class="font-semibold" id="correct-count">8/10</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Time Taken:</span>
+                            <span class="font-semibold" id="time-taken">12:34</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Passing Score:</span>
+                            <span class="font-semibold text-green-600">70%</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <button onclick="downloadCertificate()" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-download mr-2"></i>
+                            Download Certificate
+                        </button>
+                        <button onclick="retakeAssessment()" class="w-full px-6 py-3 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50">
+                            Retake Assessment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answers = {};
+        let startTime = Date.now();
+
+        const questions = [
+            {
+                question: "What is the primary assumption of technical analysis that states all known information is already reflected in price?",
+                options: [
+                    { text: "Price moves in trends", correct: false },
+                    { text: "Market discounts everything", correct: true },
+                    { text: "History repeats itself", correct: false }
+                ],
+                explanation: "The 'market discounts everything' assumption means that all known information, including fundamental factors, is already reflected in the current price."
+            },
+            {
+                question: "Which chart type provides the most visual information about market sentiment and price action?",
+                options: [
+                    { text: "Line Chart", correct: false },
+                    { text: "Bar Chart", correct: false },
+                    { text: "Candlestick Chart", correct: true }
+                ],
+                explanation: "Candlestick charts provide the most visual information about market sentiment through colored bodies and shadows, making patterns immediately recognizable."
+            },
+            {
+                question: "What does a support level represent in technical analysis?",
+                options: [
+                    { text: "A price ceiling where selling pressure increases", correct: false },
+                    { text: "A price floor where buying pressure increases", correct: true },
+                    { text: "The average price over a period", correct: false }
+                ],
+                explanation: "Support represents a price level where buying pressure is strong enough to prevent the price from falling further, acting as a floor."
+            },
+            {
+                question: "According to Dow Theory, what characterizes a primary trend?",
+                options: [
+                    { text: "Short-term fluctuations lasting days", correct: false },
+                    { text: "Medium-term corrections lasting weeks", correct: false },
+                    { text: "Long-term market direction lasting months to years", correct: true }
+                ],
+                explanation: "Dow Theory defines primary trends as the major market direction that lasts from months to years, representing the overall market movement."
+            },
+            {
+                question: "What is the golden cross in moving average analysis?",
+                options: [
+                    { text: "50-day MA crossing below 200-day MA", correct: false },
+                    { text: "50-day MA crossing above 200-day MA", correct: true },
+                    { text: "20-day MA crossing above 50-day MA", correct: false }
+                ],
+                explanation: "The golden cross occurs when the 50-day moving average crosses above the 200-day moving average, signaling a potential bullish trend reversal."
+            },
+            {
+                question: "Which candlestick pattern is considered a bullish reversal signal at the bottom of a downtrend?",
+                options: [
+                    { text: "Shooting Star", correct: false },
+                    { text: "Hammer", correct: true },
+                    { text: "Evening Star", correct: false }
+                ],
+                explanation: "The Hammer is a bullish reversal pattern that appears at the bottom of downtrends, characterized by a small body and long lower shadow."
+            },
+            {
+                question: "What does RSI above 70 typically indicate?",
+                options: [
+                    { text: "Oversold conditions", correct: false },
+                    { text: "Overbought conditions", correct: true },
+                    { text: "Neutral momentum", correct: false }
+                ],
+                explanation: "RSI readings above 70 typically indicate overbought conditions, suggesting the asset may be due for a price correction or reversal."
+            },
+            {
+                question: "What is the primary purpose of volume analysis in technical analysis?",
+ options: [
+                    { text: "To predict exact price targets", correct: false },
+                    { text: "To confirm price trends and identify potential reversals", correct: true },
+                    { text: "To calculate moving averages", correct: false }
+                ],
+                explanation: "Volume analysis is used to confirm price trends and identify potential reversals, as volume often precedes price movements and validates trend strength."
+            },
+            {
+                question: "What characterizes a head and shoulders pattern?",
+                options: [
+                    { text: "Three peaks with the middle peak highest", correct: true },
+                    { text: "Two equal peaks with a valley between", correct: false },
+                    { text: "A single peak with long shadows", correct: false }
+                ],
+                explanation: "A head and shoulders pattern consists of three peaks with the middle peak (head) higher than the two surrounding peaks (shoulders), indicating a potential trend reversal."
+            },
+            {
+                question: "What is the recommended risk-to-reward ratio for most trading strategies?",
+                options: [
+                    { text: "1:1", correct: false },
+                    { text: "2:1 or higher", correct: true },
+                    { text: "1:3", correct: false }
+                ],
+                explanation: "Professional traders typically seek risk-to-reward ratios of 2:1 or higher, meaning potential rewards are at least twice the risk taken on each trade."
+            }
+        ];
+
+        function initializeAssessment() {
+            showQuestion(0);
+            updateProgress();
+            
+            // Add click handlers to options
+            document.querySelectorAll('.option-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    selectOption(this);
+                });
+            });
+        }
+
+        function showQuestion(index) {
+            const question = questions[index];
+            
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('question-number').textContent = index + 1;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, i) => {
+                const button = document.createElement('button');
+                button.className = 'option-button w-full p-4 border border-gray-200 rounded-lg text-left hover:bg-gray-50';
+                button.setAttribute('data-answer', String.fromCharCode(97 + i)); // a, b, c, etc.
+                
+                button.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                            <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                        </div>
+                        <span>${option.text}</span>
+                    </div>
+                `;
+                
+                button.addEventListener('click', function() {
+                    selectOption(this);
+                });
+                
+                optionsContainer.appendChild(button);
+            });
+            
+            // Hide feedback
+            document.getElementById('feedback-container').classList.add('hidden');
+            
+            // Update navigation
+            document.getElementById('prev-btn').classList.toggle('hidden', index === 0);
+            document.getElementById('next-btn').classList.toggle('hidden', index === questions.length - 1);
+            document.getElementById('submit-btn').classList.toggle('hidden', index !== questions.length - 1);
+            
+            updateProgress();
+        }
+
+        function selectOption(button) {
+            // Remove previous selections
+            document.querySelectorAll('.option-button').forEach(btn => {
+                btn.classList.remove('selected');
+                btn.querySelector('.w-2').classList.add('hidden');
+            });
+            
+            // Select current option
+            button.classList.add('selected');
+            button.querySelector('.w-2').classList.remove('hidden');
+            
+            // Store answer
+            const answer = button.getAttribute('data-answer');
+            answers[currentQuestionIndex] = answer;
+            
+            // Show feedback
+            const question = questions[currentQuestionIndex];
+            const optionIndex = answer.charCodeAt(0) - 97;
+            const isCorrect = question.options[optionIndex].correct;
+            
+            showFeedback(isCorrect, question.explanation);
+        }
+
+        function showFeedback(isCorrect, explanation) {
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackText = document.getElementById('feedback-text');
+            
+            feedbackText.textContent = explanation;
+            
+            if (isCorrect) {
+                feedbackContainer.className = 'mt-6 p-4 rounded-lg bg-green-50 border border-green-200';
+            } else {
+                feedbackContainer.className = 'mt-6 p-4 rounded-lg bg-red-50 border border-red-200';
+            }
+            
+            feedbackContainer.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = questions.length;
+        }
+
+        function submitAssessment() {
+            // Calculate score
+            score = 0;
+            Object.entries(answers).forEach(([index, answer]) => {
+                const question = questions[parseInt(index)];
+                const optionIndex = answer.charCodeAt(0) - 97;
+                if (question.options[optionIndex].correct) {
+                    score++;
+                }
+            });
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            
+            // Update results modal
+            document.getElementById('final-score').textContent = percentage + '%';
+            document.getElementById('correct-count').textContent = `${score}/${questions.length}`;
+            document.getElementById('time-taken').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Show results modal
+            document.getElementById('results-modal').classList.remove('hidden');
+            
+            // SCORM: Submit assessment results
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.score.raw', percentage);
+                SCORM.set('cmi.core.score.max', '100');
+                SCORM.set('cmi.core.score.min', '0');
+                SCORM.set('cmi.core.lesson_status', percentage >= 70 ? 'passed' : 'failed');
+                SCORM.save();
+            }
+            
+            // Update course progress
+            localStorage.setItem('courseProgress', percentage);
+        }
+
+        function downloadCertificate() {
+            alert('Certificate download functionality would be implemented here. For now, your completion has been recorded.');
+        }
+
+        function retakeAssessment() {
+            if (confirm('Are you sure you want to retake the assessment? Your current score will be lost.')) {
+                currentQuestionIndex = 0;
+                score = 0;
+                answers = {};
+                startTime = Date.now();
+                document.getElementById('results-modal').classList.add('hidden');
+                showQuestion(0);
+            }
+        }
+
+        function goBack() {
+            if (confirm('Are you sure you want to leave the assessment? Your progress will be lost.')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAssessment();
+        });
+    </script>
+</body>
+</html>

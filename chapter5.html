@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5: Chart Patterns</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .pattern-card { transition: all 0.3s ease; }
+        .pattern-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .pattern-demo { cursor: pointer; transition: all 0.2s ease; }
+        .pattern-demo:hover { background-color: #f8fafc; }
+        .pattern-demo.selected { background-color: #dbeafe; border-color: #3b82f6; }
+        .interactive-chart { border: 2px dashed #e5e7eb; transition: all 0.3s ease; }
+        .interactive-chart:hover { border-color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Chapter 5: Chart Patterns</h1>
+                        <p class="text-sm text-gray-600">Recognition and trading strategies</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span id="lesson-progress">0%</span> Complete
+                    </div>
+                    <button onclick="toggleMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chapter Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mr-6">
+                        <i class="fas fa-shapes text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Chart Patterns</h1>
+                        <p class="text-lg text-gray-600 mt-2">The language of market psychology</p>
+                    </div>
+                </div>
+                
+                <img src="chart_patterns_guide.png" alt="Chart Patterns Guide" class="w-full rounded-lg shadow-sm mb-6">
+                
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Chart patterns are the visual representation of market psychology, reflecting the collective emotions and behaviors of market participants. Learning to recognize these patterns provides valuable insights into potential future price movements and trading opportunities.
+                </p>
+            </div>
+        </div>
+
+        <!-- Pattern Categories -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Reversal Patterns -->
+            <div class="pattern-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-exchange-alt text-red-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Reversal Patterns</h2>
+                            <p class="text-gray-600">Signals potential trend changes</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="pattern-demo p-4 border border-gray-200 rounded-lg" onclick="showPatternDetails('head-and-shoulders')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Head and Shoulders</h4>
+                                    <p class="text-sm text-gray-600">Most reliable reversal pattern</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="pattern-demo p-4 border border-gray-200 rounded-lg" onclick="showPatternDetails('double-top')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Double Top/Bottom</h4>
+                                    <p class="text-sm text-gray-600">"M" and "W" patterns</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="pattern-demo p-4 border border-gray-200 rounded-lg" onclick="showPatternDetails('triple-top')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Triple Top/Bottom</h4>
+                                    <p class="text-sm text-gray-600">Three testing attempts</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="pattern-demo p-4 border border-gray-200 rounded-lg" onclick="showPatternDetails('island-reversal')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Island Reversal</h4>
+                                    <p class="text-sm text-gray-600">Gap up then gap down</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Continuation Patterns -->
+            <div class="pattern-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-arrow-right text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Continuation Patterns</h2>
+                            <p class="text-gray-600">Trend pauses before resuming</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="pattern-demo p-4 border border-gray-200 rounded-lg" onclick="showPatternDetails('triangles')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Triangles</h4>
+                                    <p class="text-sm text-gray-600">Symmetrical, ascending, descending</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="pattern-demo p-4 border border-gray-200 rounded-lg" onclick="showPatternDetails('flags-pennants')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Flags and Pennants</h4>
+                                    <p class="text-sm text-gray-600">Short-term consolidation</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="pattern-demo p-4 border border-gray-200 rounded-lg" onclick="showPatternDetails('rectangles')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Rectangles</h4>
+                                    <p class="text-sm text-gray-600">Horizontal trading range</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="pattern-demo p-4 border border-gray-200 rounded-lg" onclick="showPatternDetails('cup-handle')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Cup and Handle</h4>
+                                    <p class="text-sm text-gray-600">Bullish continuation</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Pattern Recognition -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-eye text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Pattern Recognition Exercise</h2>
+                        <p class="text-gray-600">Test your ability to identify chart patterns</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <div id="pattern-chart" class="interactive-chart w-full h-80 rounded-lg bg-gray-50 flex items-center justify-center mb-4">
+                            <div class="text-center text-gray-600">
+                                <i class="fas fa-chart-line text-4xl mb-4"></i>
+                                <p>Click "Generate Pattern" to start exercise</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4">
+                            <button onclick="generatePattern()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Generate Pattern
+                            </button>
+                            <button onclick="showHint()" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
+                                Show Hint
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h4 class="font-semibold text-gray-900">What pattern do you see?</h4>
+                        <div class="space-y-2" id="pattern-options">
+                            <button onclick="selectPattern('head-shoulders')" class="pattern-option w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50">
+                                Head and Shoulders
+                            </button>
+                            <button onclick="selectPattern('double-top')" class="pattern-option w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50">
+                                Double Top
+                            </button>
+                            <button onclick="selectPattern('triangle')" class="pattern-option w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50">
+                                Triangle
+                            </button>
+                            <button onclick="selectPattern('flag')" class="pattern-option w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50">
+                                Flag/Pennant
+                            </button>
+                        </div>
+                        
+                        <div id="pattern-feedback" class="p-4 rounded-lg hidden">
+                        </div>
+                        
+                        <div class="text-sm text-gray-600">
+                            Score: <span id="pattern-score">0</span>/5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Candlestick Patterns -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-fire text-orange-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Candlestick Patterns</h2>
+                        <p class="text-gray-600">Single and multi-candle formations</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Bullish Patterns -->
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                        <h4 class="font-semibold text-green-900 mb-4 flex items-center">
+                            <i class="fas fa-arrow-up text-green-600 mr-2"></i>
+                            Bullish Patterns
+                        </h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-800">Hammer</span>
+                                <span class="text-green-600 text-xs">Reversal</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-800">Morning Star</span>
+                                <span class="text-green-600 text-xs">3-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-800">Bullish Engulfing</span>
+                                <span class="text-green-600 text-xs">2-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-800">Piercing Line</span>
+                                <span class="text-green-600 text-xs">2-candle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bearish Patterns -->
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+                        <h4 class="font-semibold text-red-900 mb-4 flex items-center">
+                            <i class="fas fa-arrow-down text-red-600 mr-2"></i>
+                            Bearish Patterns
+                        </h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800">Shooting Star</span>
+                                <span class="text-red-600 text-xs">Reversal</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800">Evening Star</span>
+                                <span class="text-red-600 text-xs">3-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800">Bearish Engulfing</span>
+                                <span class="text-red-600 text-xs">2-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800">Dark Cloud Cover</span>
+                                <span class="text-red-600 text-xs">2-candle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Neutral Patterns -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h4 class="font-semibold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-balance-scale text-gray-600 mr-2"></i>
+                            Neutral Patterns
+                        </h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-800">Doji</span>
+                                <span class="text-gray-600 text-xs">Indecision</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-800">Spinning Top</span>
+                                <span class="text-gray-600 text-xs">Indecision</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-800">Dragonfly Doji</span>
+                                <span class="text-gray-600 text-xs">Bullish bias</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-800">Gravestone Doji</span>
+                                <span class="text-gray-600 text-xs">Bearish bias</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern Reliability -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-chart-bar text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Pattern Reliability Factors</h2>
+                        <p class="text-gray-600">What makes patterns more reliable</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Volume Confirmation</h4>
+                        <p class="text-sm text-gray-600">Higher volume on breakouts increases reliability</p>
+                    </div>
+
+                    <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-ruler text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Pattern Symmetry</h4>
+                        <p class="text-sm text-gray-600">Well-balanced patterns are more reliable</p>
+                    </div>
+
+                    <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-white text-xl"></n                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Time Development</h4>
+                        <p class="text-sm text-gray-600">Longer formation periods increase significance</p>
+                    </div>
+
+                    <div class="text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg">
+                        <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Key Levels</h4>
+                        <p class="text-sm text-gray-600">Patterns at support/resistance are more significant</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center">
+            <button onclick="goBack()" class="flex items-center text-gray-600 hover:text-gray-900">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Course
+            </button>
+            <button onclick="nextChapter()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Next Chapter
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let patternScore = 0;
+        let currentPattern = null;
+        let exerciseCount = 0;
+
+        function showPatternDetails(patternType) {
+            // Remove previous selections
+            document.querySelectorAll('.pattern-demo').forEach(demo => {
+                demo.classList.remove('selected');
+            });
+            
+            // Select current pattern
+            event.currentTarget.classList.add('selected');
+            
+            // Show pattern details (simplified for demo)
+            const details = {
+                'head-and-shoulders': {
+                    name: 'Head and Shoulders',
+                    description: 'Most reliable reversal pattern with three peaks',
+                    reliability: 'High'
+                },
+                'double-top': {
+                    name: 'Double Top/Bottom',
+                    description: 'M or W shaped pattern indicating resistance/support test',
+                    reliability: 'Medium-High'
+                },
+                'triangle': {
+                    name: 'Triangle Patterns',
+                    description: 'Symmetrical, ascending, or descending consolidation',
+                    reliability: 'Medium'
+                }
+            };
+            
+            if (details[patternType]) {
+                alert(`${details[patternType].name}\n\n${details[patternType].description}\n\nReliability: ${details[patternType].reliability}`);
+            }
+        }
+
+        function generatePattern() {
+            exerciseCount++;
+            const patterns = ['head-shoulders', 'double-top', 'triangle', 'flag'];
+            currentPattern = patterns[Math.floor(Math.random() * patterns.length)];
+            
+            // Generate sample price data for pattern
+            const dates = [];
+            const prices = [];
+            let basePrice = 100;
+            
+            // Create different pattern shapes based on currentPattern
+            for (let i = 0; i < 30; i++) {
+                dates.push(`Day ${i + 1}`);
+                
+                if (currentPattern === 'head-shoulders') {
+                    // Simulate head and shoulders pattern
+                    if (i < 8) basePrice += Math.random() * 2;
+                    else if (i < 15) basePrice += Math.random() * 3;
+                    else if (i < 22) basePrice -= Math.random() * 2;
+                    else basePrice -= Math.random() * 3;
+                } else if (currentPattern === 'double-top') {
+                    // Simulate double top pattern
+                    if (i < 10) basePrice += Math.random() * 2;
+                    else if (i < 15) basePrice -= Math.random() * 2;
+                    else if (i < 20) basePrice += Math.random() * 2;
+                    else basePrice -= Math.random() * 3;
+                } else {
+                    // Default pattern
+                    basePrice += (Math.random() - 0.5) * 4;
+                }
+                
+                prices.push(basePrice);
+            }
+
+            const trace = {
+                x: dates,
+                y: prices,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Price',
+                line: { color: '#3b82f6', width: 2 },
+                marker: { size: 4 }
+            };
+
+            const layout = {
+                title: 'Identify the Pattern',
+                xaxis: { title: 'Time Period' },
+                yaxis: { title: 'Price ($)' },
+                showlegend: false,
+                margin: { t: 40, r: 40, b: 40, l: 60 }
+            };
+
+            Plotly.newPlot('pattern-chart', [trace], layout, {responsive: true});
+            
+            // Reset options
+            document.querySelectorAll('.pattern-option').forEach(option => {
+                option.className = 'pattern-option w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50';
+            });
+            
+            document.getElementById('pattern-feedback').classList.add('hidden');
+        }
+
+        function selectPattern(patternType) {
+            // Remove previous selections
+            document.querySelectorAll('.pattern-option').forEach(option => {
+                option.className = 'pattern-option w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50';
+            });
+            
+            // Select current option
+            event.currentTarget.className = 'pattern-option w-full p-3 border border-gray-200 rounded-lg text-left bg-blue-50 border-blue-300';
+            
+            // Check answer
+            const isCorrect = patternType === currentPattern;
+            showPatternFeedback(isCorrect);
+            
+            if (isCorrect) {
+                patternScore++;
+                document.getElementById('pattern-score').textContent = patternScore;
+            }
+        }
+
+        function showPatternFeedback(isCorrect) {
+            const feedbackContainer = document.getElementById('pattern-feedback');
+            
+            if (isCorrect) {
+                feedbackContainer.className = 'p-4 rounded-lg bg-green-50 border border-green-200';
+                feedbackContainer.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                        <span class="text-green-800 font-semibold">Correct!</span>
+                    </div>
+                    <p class="text-green-700 text-sm mt-2">You correctly identified the ${currentPattern.replace('-', ' ')} pattern.</p>
+                `;
+            } else {
+                feedbackContainer.className = 'p-4 rounded-lg bg-red-50 border border-red-200';
+                feedbackContainer.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-times-circle text-red-600 mr-2"></i>
+                        <span class="text-red-800 font-semibold">Incorrect</span>
+                    </div>
+                    <p class="text-red-700 text-sm mt-2">This was actually a ${currentPattern.replace('-', ' ')} pattern. Keep practicing!</p>
+                `;
+            }
+            
+            feedbackContainer.classList.remove('hidden');
+        }
+
+        function showHint() {
+            if (!currentPattern) {
+                alert('Generate a pattern first!');
+                return;
+            }
+            
+            const hints = {
+                'head-shoulders': 'Look for three peaks with the middle one highest',
+                'double-top': 'Look for two peaks at approximately the same level',
+                'triangle': 'Look for converging trendlines',
+                'flag': 'Look for a sharp move followed by a small rectangular consolidation'
+            };
+            
+            alert(`Hint: ${hints[currentPattern]}`);
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('lesson-progress').textContent = percentage;
+            
+            // SCORM: Update progress
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_location', 'chapter5');
+                SCORM.set('cmi.core.lesson_status', percentage === 100 ? 'completed' : 'incomplete');
+            }
+        }
+
+        function nextChapter() {
+            updateProgress(100);
+            window.location.href = 'chapter6.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress(60); // Mark as advanced
+        });
+    </script>
+</body>
+</html>

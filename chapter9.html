@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9: Course Summary and Certification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .achievement-card { transition: all 0.3s ease; }
+        .achievement-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .skill-meter { background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #ef4444 100%); }
+        .certificate-preview { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 3px solid #d4af37; }
+        .mastery-level { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Course Summary & Certification</h1>
+                        <p class="text-sm text-gray-600">Your learning journey complete</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span id="lesson-progress">0%</span> Complete
+                    </div>
+                    <button onclick="toggleMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chapter Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8 text-center">
+                <div class="w-24 h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-trophy text-white text-4xl"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Congratulations!</h1>
+                <p class="text-xl text-gray-600 mb-6">You have successfully completed the Technical Analysis Mastery course</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-blue-600">9</div>
+                        <div class="text-sm text-gray-600">Chapters Completed</div>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-green-600">27</div>
+                        <div class="text-sm text-gray-600">Lessons Mastered</div>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-purple-600">12+</div>
+                        <div class="text-sm text-gray-600">Hours of Learning</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Achievement -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-graduation-cap text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Your Learning Achievement</h2>
+                        <p class="text-gray-600">Skills and knowledge you've mastered</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="achievement-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-3 text-center">Chart Analysis Mastery</h4>
+                        <div class="space-y-2 text-sm text-blue-800">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>All major chart types</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Candlestick patterns</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Timeframe analysis</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Proficiency</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-meter h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calculator text-white text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-3 text-center">Technical Indicators</h4>
+                        <div class="space-y-2 text-sm text-green-800">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Momentum indicators</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Volume analysis</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Volatility measures</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Proficiency</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-meter h-2 rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chess text-white text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-3 text-center">Trading Strategies</h4>
+                        <div class="space-y-2 text-sm text-purple-800">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Trend following</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Range trading</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Risk management</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Proficiency</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-meter h-2 rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6">
+                        <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-brain text-white text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-3 text-center">Advanced Concepts</h4>
+                        <div class="space-y-2 text-sm text-orange-800">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Elliott Wave Theory</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Fibonacci analysis</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Volume profile</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Proficiency</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-meter h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-6">
+                        <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-white text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-3 text-center">Risk Management</h4>
+                        <div class="space-y-2 text-sm text-red-800">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Position sizing</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Stop loss strategies</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Portfolio management</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Proficiency</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-meter h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-6">
+                        <div class="w-16 h-16 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-network-wired text-white text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-3 text-center">Market Analysis</h4>
+                        <div class="space-y-2 text-sm text-indigo-800">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Intermarket analysis</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Market sentiment</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Behavioral finance</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Proficiency</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-meter h-2 rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Preview -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-certificate text-yellow-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Your Certificate</h2>
+                        <p class="text-gray-600">Official recognition of your achievement</p>
+                    </div>
+                </div>
+
+                <div class="certificate-preview rounded-lg p-8 text-center">
+                    <div class="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-medal text-white text-3xl"></i>
+                    </div>
+                    
+                    <h3 class="text-3xl font-bold text-gray-900 mb-2">Certificate of Completion</h3>
+                    <p class="text-lg text-gray-600 mb-6">This certifies that</p>
+                    
+                    <div class="mastery-level rounded-lg p-6 mb-6">
+                        <h4 class="text-2xl font-bold text-white mb-2">[Your Name]</h4>
+                        <p class="text-white text-lg">has successfully completed</p>
+                    </div>
+                    
+                    <h5 class="text-xl font-bold text-gray-900 mb-2">Technical Analysis Mastery</h5>
+                    <p class="text-gray-600 mb-6">Comprehensive course covering fundamental to advanced technical analysis concepts</p>
+                    
+                    <div class="grid grid-cols-2 gap-6 text-sm text-gray-600 mb-6">
+                        <div>
+                            <strong>Completion Date:</strong><br>
+                            <span id="completion-date">December 2024</span>
+                        </div>
+                        <div>
+                            <strong>Final Score:</strong><br>
+                            <span id="final-score">95%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-xs text-gray-500">
+                        Certificate ID: TA-2024-001234 | SCORM 1.2 Compliant
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="downloadCertificate()" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 mr-4">
+                        <i class="fas fa-download mr-2"></i>
+                        Download Certificate
+                    </button>
+                    <button onclick="shareAchievement()" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700">
+                        <i class="fas fa-share mr-2"></i>
+                        Share Achievement
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-route text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Your Next Steps</h2>
+                        <p class="text-gray-600">Continue your trading education journey</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-blue-900 mb-3">Practice Trading</h4>
+                        <p class="text-blue-800 text-sm mb-4">
+                            Open a demo account and practice your new skills with virtual money before trading with real capital.
+                        </p>
+                        <div class="text-xs text-blue-700">
+                            Recommended: 3-6 months paper trading
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                        <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-book text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-green-900 mb-3">Advanced Courses</h4>
+                        <p class="text-green-800 text-sm mb-4">
+                            Explore specialized topics like algorithmic trading, options strategies, or quantitative analysis.
+                        </p>
+                        <div class="text-xs text-green-700">
+                            Next: Algorithmic Trading Mastery
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                        <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-users text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-purple-900 mb-3">Join Community</h4>
+                        <p class="text-purple-800 text-sm mb-4">
+                            Connect with other traders, share ideas, and continue learning through trading communities and forums.
+                        </p>
+                        <div class="text-xs text-purple-700">
+                            Join: Technical Analysis Society
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                        <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-newspaper text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-orange-900 mb-3">Stay Updated</h4>
+                        <p class="text-orange-800 text-sm mb-4">
+                            Follow financial news, market analysis, and continue reading trading books to stay current.
+                        </p>
+                        <div class="text-xs text-orange-700">
+                            Read: "Technical Analysis of the Financial Markets"
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+                        <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-calendar-alt text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-red-900 mb-3">Trading Journal</h4>
+                        <p class="text-red-800 text-sm mb-4">
+                            Keep detailed records of your trades to analyze performance and identify areas for improvement.
+                        </p>
+                        <div class="text-xs text-red-700">
+                            Track: Entry, exit, rationale, emotions
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-6">
+                        <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-certificate text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-indigo-900 mb-3">Certifications</h4>
+                        <p class="text-indigo-800 text-sm mb-4">
+                            Consider professional certifications like CMT (Chartered Market Technician) to further your credentials.
+                        </p>
+                        <div class="text-xs text-indigo-700">
+                            Next: CMT Level 1
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Feedback -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-comment text-pink-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Course Feedback</h2>
+                        <p class="text-gray-600">Help us improve this course for future learners</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Overall Rating</label>
+                            <div class="flex space-x-2">
+                                <button class="rating-star text-2xl text-gray-300 hover:text-yellow-400" onclick="setRating(1)">★</button>
+                                <button class="rating-star text-2xl text-gray-300 hover:text-yellow-400" onclick="setRating(2)">★</button>
+                                <button class="rating-star text-2xl text-gray-300 hover:text-yellow-400" onclick="setRating(3)">★</button>
+                                <button class="rating-star text-2xl text-gray-300 hover:text-yellow-400" onclick="setRating(4)">★</button>
+                                <button class="rating-star text-2xl text-gray-300 hover:text-yellow-400" onclick="setRating(5)">★</button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Most Valuable Chapter</label>
+                            <select class="w-full p-3 border border-gray-300 rounded-lg">
+                                <option>Chapter 1: Introduction to Technical Analysis</option>
+                                <option>Chapter 2: Chart Types and Construction</option>
+                                <option>Chapter 3: Support and Resistance</option>
+                                <option>Chapter 4: Trend Analysis</option>
+                                <option>Chapter 5: Chart Patterns</option>
+                                <option>Chapter 6: Technical Indicators</option>
+                                <option>Chapter 7: Trading Strategies</option>
+                                <option>Chapter 8: Advanced Concepts</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">What did you like most about this course?</label>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="Share your thoughts..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">What could be improved?</label>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="Your suggestions..."></textarea>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button onclick="submitFeedback()" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700">
+                            Submit Feedback
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Message -->
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white text-center">
+            <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-rocket text-white text-3xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold mb-4">Your Trading Journey Begins Now</h2>
+            <p class="text-xl mb-6 opacity-90">
+                You now have the knowledge and tools to analyze markets systematically. Remember, successful trading requires continuous learning, discipline, and risk management.
+            </p>
+            <div class="text-lg opacity-80">
+                "The market is a device for transferring money from the impatient to the patient." - Warren Buffett
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 0;
+
+        function setRating(rating) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('.rating-star');
+            
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.className = 'rating-star text-2xl text-yellow-400';
+                } else {
+                    star.className = 'rating-star text-2xl text-gray-300 hover:text-yellow-400';
+                }
+            });
+        }
+
+        function downloadCertificate() {
+            // Generate certificate with current date
+            const completionDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('completion-date').textContent = completionDate;
+            
+            // SCORM: Mark course complete
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_status', 'completed');
+                SCORM.set('cmi.core.score.raw', '95');
+                SCORM.set('cmi.core.score.max', '100');
+                SCORM.set('cmi.core.score.min', '0');
+                SCORM.save();
+            }
+            
+            alert(`Certificate downloaded successfully!\n\nCertificate ID: TA-2024-001234\nCompletion Date: ${completionDate}\nFinal Score: 95%\n\nCongratulations on completing the Technical Analysis Mastery course!`);
+        }
+
+        function shareAchievement() {
+            const shareText = `I just completed the Technical Analysis Mastery course! Learned chart patterns, indicators, and trading strategies. Certificate ID: TA-2024-001234`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Technical Analysis Mastery Certificate',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers without Web Share API
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Achievement copied to clipboard! Share it on your social media.');
+                });
+            }
+        }
+
+        function submitFeedback() {
+            const rating = currentRating;
+            const mostValuable = document.querySelector('select').value;
+            const liked = document.querySelectorAll('textarea')[0].value;
+            const improvements = document.querySelectorAll('textarea')[1].value;
+            
+            if (rating === 0) {
+                alert('Please provide a rating before submitting feedback.');
+                return;
+            }
+            
+            // SCORM: Track feedback submission
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.interactions.n.id', 'course_feedback');
+                SCORM.set('cmi.interactions.n.type', 'other');
+                SCORM.set('cmi.interactions.n.result', 'correct');
+            }
+            
+            alert(`Thank you for your feedback!\n\nRating: ${rating} stars\nMost valuable chapter: ${mostValuable}\n\nYour feedback helps us improve the course for future learners.`);
+            
+            // Clear form
+            document.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
+            document.querySelector('select').selectedIndex = 0;
+            setRating(0);
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('lesson-progress').textContent = percentage;
+            
+            // SCORM: Update progress
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_location', 'chapter9');
+                SCORM.set('cmi.core.lesson_status', 'completed');
+                SCORM.save();
+            }
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress(100);
+            
+            // Set completion date
+            const completionDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('completion-date').textContent = completionDate;
+        });
+    </script>
+</body>
+</html>

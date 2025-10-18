@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: Chart Types and Construction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-demo { transition: all 0.3s ease; }
+        .chart-demo:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Chapter 2: Chart Types and Construction</h1>
+                        <p class="text-sm text-gray-600">Master different chart types and their applications</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span id="lesson-progress">0%</span> Complete
+                    </div>
+                    <button onclick="toggleMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chapter Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mr-6">
+                        <i class="fas fa-chart-area text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Chart Types and Construction</h1>
+                        <p class="text-lg text-gray-600 mt-2">Understanding the foundation of technical visualization</p>
+                    </div>
+                </div>
+                
+                <img src="chart_types_diagram.png" alt="Chart Types Comparison" class="w-full rounded-lg shadow-sm mb-6">
+                
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Financial charts are the visual language of technical analysis, providing traders and analysts with the tools to interpret market behavior, identify patterns, and make informed trading decisions. Each chart type offers unique perspectives on price action and market sentiment.
+                </p>
+            </div>
+        </div>
+
+        <!-- Chart Types Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Line Chart -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 chart-demo">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Line Chart</h3>
+                            <p class="text-sm text-gray-600">Simple trend visualization</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        The most basic chart type, connecting closing prices with a continuous line. Ideal for identifying overall trends and long-term price movements.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Clean, easy to read</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Great for trend identification</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-times text-red-500 mr-2"></i>
+                            <span>Lacks intraday detail</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bar Chart -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 chart-demo">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-bar text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Bar Chart (OHLC)</h3>
+                            <p class="text-sm text-gray-600">Comprehensive price data</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        Displays Open, High, Low, and Close prices for each period, providing complete price action data in a compact vertical bar format.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Complete OHLC data</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Compact representation</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                            <span>Requires interpretation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Candlestick Chart -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 chart-demo">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-fire text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Candlestick Chart</h3>
+                            <p class="text-sm text-gray-600">Visual pattern recognition</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        Originating from 18th-century Japanese rice traders, candlesticks offer enhanced visual impact with colored bodies that make patterns immediately recognizable.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Visual pattern recognition</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Rich market sentiment data</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Most popular among traders</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Candlestick Anatomy -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-fire text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Candlestick Anatomy</h2>
+                        <p class="text-gray-600">Understanding the building blocks of candlestick analysis</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <img src="candlestick_anatomy.png" alt="Candlestick Anatomy" class="w-full rounded-lg shadow-sm">
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4">
+                            <h4 class="font-semibold text-green-900 mb-2">Bullish Candlestick</h4>
+                            <p class="text-green-800 text-sm">Close price is higher than open price (green/white body)</p>
+                        </div>
+                        <div class="bg-red-50 border-l-4 border-red-400 p-4">
+                            <h4 class="font-semibold text-red-900 mb-2">Bearish Candlestick</h4>
+                            <p class="text-red-800 text-sm">Close price is lower than open price (red/black body)</p>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <h4 class="font-semibold text-blue-900 mb-2">Key Components</h4>
+                            <ul class="text-blue-800 text-sm space-y-1">
+                                <li><strong>Real Body:</strong> Price range between open and close</li>
+                                <li><strong>Upper Shadow:</strong> High price above the body</li>
+                                <li><strong>Lower Shadow:</strong> Low price below the body</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeframes -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-clock text-orange-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Chart Timeframes</h2>
+                        <p class="text-gray-600">Selecting the right timeframe for your trading style</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-bolt text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Intraday</h4>
+                        <p class="text-sm text-gray-600 mb-3">1min - 60min</p>
+                        <p class="text-xs text-gray-500">Day trading and scalping</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-day text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Daily</h4>
+                        <p class="text-sm text-gray-600 mb-3">1 day</p>
+                        <p class="text-xs text-gray-500">Swing trading</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-week text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Weekly</h4>
+                        <p class="text-sm text-gray-600 mb-3">1 week</p>
+                        <p class="text-xs text-gray-500">Position trading</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-alt text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Monthly</h4>
+                        <p class="text-sm text-gray-600 mb-3">1 month</p>
+                        <p class="text-xs text-gray-500">Long-term investing</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-blue-50 rounded-lg">
+                    <h4 class="font-semibold text-blue-900 mb-3">Multiple Timeframe Analysis</h4>
+                    <p class="text-blue-800 mb-4">
+                        Professional traders analyze at least three timeframes: a higher timeframe for trend direction, the trading timeframe for setup identification, and a lower timeframe for precise entry timing.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white rounded-lg p-4 text-center">
+                            <div class="text-lg font-bold text-blue-600">Higher TF</div>
+                            <div class="text-sm text-gray-600">Trend Direction</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 text-center">
+                            <div class="text-lg font-bold text-green-600">Trading TF</div>
+                            <div class="text-sm text-gray-600">Setup Identification</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 text-center">
+                            <div class="text-lg font-bold text-purple-600">Lower TF</div>
+                            <div class="text-sm text-gray-600">Entry Timing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Exercise -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-mouse-pointer text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Interactive Exercise</h2>
+                        <p class="text-gray-600">Identify chart components and patterns</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <h4 class="font-semibold text-gray-900">Chart Type Matching</h4>
+                        <p class="text-gray-600 text-sm">Match each description to the correct chart type:</p>
+                        
+                        <div class="space-y-3">
+                            <div class="p-3 border border-gray-200 rounded-lg">
+                                <p class="text-sm text-gray-700">"Shows OHLC data with colored bodies for easy pattern recognition"</p>
+                                <select class="mt-2 w-full p-2 border border-gray-300 rounded text-sm" onchange="checkAnswer(this, 'candlestick')">
+                                    <option value="">Select chart type...</option>
+                                    <option value="line">Line Chart</option>
+                                    <option value="bar">Bar Chart</option>
+                                    <option value="candlestick">Candlestick Chart</option>
+                                </select>
+                            </div>
+                            
+                            <div class="p-3 border border-gray-200 rounded-lg">
+                                <p class="text-sm text-gray-700">"Simplest chart connecting only closing prices"</p>
+                                <select class="mt-2 w-full p-2 border border-gray-300 rounded text-sm" onchange="checkAnswer(this, 'line')">
+                                    <option value="">Select chart type...</option>
+                                    <option value="line">Line Chart</option>
+                                    <option value="bar">Bar Chart</option>
+                                    <option value="candlestick">Candlestick Chart</option>
+                                </select>
+                            </div>
+                            
+                            <div class="p-3 border border-gray-200 rounded-lg">
+                                <p class="text-sm text-gray-700">"Uses vertical bars to show OHLC data"</p>
+                                <select class="mt-2 w-full p-2 border border-gray-300 rounded text-sm" onchange="checkAnswer(this, 'bar')">
+                                    <option value="">Select chart type...</option>
+                                    <option value="line">Line Chart</option>
+                                    <option value="bar">Bar Chart</option>
+                                    <option value="candlestick">Candlestick Chart</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h4 class="font-semibold text-gray-900">Exercise Results</h4>
+                        <div id="exercise-results" class="space-y-3">
+                            <div class="p-3 bg-gray-50 rounded-lg text-center text-gray-500">
+                                Complete the exercises to see results
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                            <h5 class="font-semibold text-blue-900 mb-2">Learning Tip</h5>
+                            <p class="text-blue-800 text-sm">
+                                Practice reading different chart types daily. Start with daily charts for trend identification, then move to shorter timeframes for entry timing.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center">
+            <button onclick="goBack()" class="flex items-center text-gray-600 hover:text-gray-900">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Course
+            </button>
+            <button onclick="nextChapter()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Next Chapter
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let exerciseScore = 0;
+        let totalExercises = 3;
+
+        function checkAnswer(selectElement, correctAnswer) {
+            const selectedValue = selectElement.value;
+            const isCorrect = selectedValue === correctAnswer;
+            
+            if (isCorrect) {
+                selectElement.className = selectElement.className.replace(/border-\w+-\d+/, '') + ' border-green-500 bg-green-50';
+                exerciseScore++;
+            } else {
+                selectElement.className = selectElement.className.replace(/border-\w+-\d+/, '') + ' border-red-500 bg-red-50';
+            }
+            
+            updateExerciseResults();
+            
+            // SCORM: Track exercise completion
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.interactions.n.id', 'chart_exercise');
+                SCORM.set('cmi.interactions.n.type', 'choice');
+                SCORM.set('cmi.interactions.n.result', isCorrect ? 'correct' : 'incorrect');
+            }
+        }
+
+        function updateExerciseResults() {
+            const resultsContainer = document.getElementById('exercise-results');
+            const percentage = Math.round((exerciseScore / totalExercises) * 100);
+            
+            resultsContainer.innerHTML = `
+                <div class="p-4 ${exerciseScore === totalExercises ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'} border rounded-lg">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold ${exerciseScore === totalExercises ? 'text-green-600' : 'text-blue-600'}">${percentage}%</div>
+                        <div class="text-sm ${exerciseScore === totalExercises ? 'text-green-700' : 'text-blue-700'}">
+                            ${exerciseScore} of ${totalExercises} correct
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            if (exerciseScore === totalExercises) {
+                resultsContainer.innerHTML += `
+                    <div class="p-3 bg-green-100 border border-green-300 rounded-lg mt-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-trophy text-green-600 mr-2"></i>
+                            <span class="text-green-800 font-semibold">Excellent! All exercises completed correctly!</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('lesson-progress').textContent = percentage;
+            
+            // SCORM: Update progress
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_location', 'chapter2');
+                SCORM.set('cmi.core.lesson_status', percentage === 100 ? 'completed' : 'incomplete');
+            }
+        }
+
+        function nextChapter() {
+            updateProgress(100);
+            window.location.href = 'chapter3.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress(50); // Mark as in progress
+        });
+    </script>
+</body>
+</html>

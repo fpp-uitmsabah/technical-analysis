@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="TechnicalAnalysisMastery" version="1.0" 
+          xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" 
+          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd 
+                              http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+
+    <metadata>
+        <schema>ADL SCORM</schema>
+        <schemaversion>1.2</schemaversion>
+        <adlcp:location>metadata.xml</adlcp:location>
+    </metadata>
+
+    <organizations default="TechnicalAnalysisCourse">
+        <organization identifier="TechnicalAnalysisCourse">
+            <title>Technical Analysis Mastery</title>
+            
+            <!-- Chapter 1: Introduction to Technical Analysis -->
+            <item identifier="chapter1" identifierref="chapter1_resource">
+                <title>Introduction to Technical Analysis</title>
+                <item identifier="lesson1_1" identifierref="lesson1_1_resource">
+                    <title>What is Technical Analysis?</title>
+                </item>
+                <item identifier="lesson1_2" identifierref="lesson1_2_resource">
+                    <title>Technical vs Fundamental Analysis</title>
+                </item>
+                <item identifier="lesson1_3" identifierref="lesson1_3_resource">
+                    <title>Market Assumptions and Theories</title>
+                </item>
+            </item>
+
+            <!-- Chapter 2: Chart Types and Construction -->
+            <item identifier="chapter2" identifierref="chapter2_resource">
+                <title>Chart Types and Construction</title>
+                <item identifier="lesson2_1" identifierref="lesson2_1_resource">
+                    <title>Types of Financial Charts</title>
+                </item>
+                <item identifier="lesson2_2" identifierref="lesson2_2_resource">
+                    <title>Candlestick Anatomy and Structure</title>
+                </item>
+                <item identifier="lesson2_3" identifierref="lesson2_3_resource">
+                    <title>Chart Timeframes and Applications</title>
+                </item>
+            </item>
+
+            <!-- Chapter 3: Support and Resistance -->
+            <item identifier="chapter3" identifierref="chapter3_resource">
+                <title>Support and Resistance</title>
+                <item identifier="lesson3_1" identifierref="lesson3_1_resource">
+                    <title>Understanding Support and Resistance</title>
+                </item>
+                <item identifier="lesson3_2" identifierref="lesson3_2_resource">
+                    <title>Identifying Key Levels</title>
+                </item>
+                <item identifier="lesson3_3" identifierref="lesson3_3_resource">
+                    <title>Trading Support and Resistance Strategies</title>
+                </item>
+            </item>
+
+            <!-- Chapter 4: Trend Analysis -->
+            <item identifier="chapter4" identifierref="chapter4_resource">
+                <title>Trend Analysis</title>
+                <item identifier="lesson4_1" identifierref="lesson4_1_resource">
+                    <title>Dow Theory and Market Trends</title>
+                </item>
+                <item identifier="lesson4_2" identifierref="lesson4_2_resource">
+                    <title>Trend Lines and Channels</title>
+                </item>
+                <item identifier="lesson4_3" identifierref="lesson4_3_resource">
+                    <title>Moving Averages as Trend Indicators</title>
+                </item>
+            </item>
+
+            <!-- Chapter 5: Chart Patterns -->
+            <item identifier="chapter5" identifierref="chapter5_resource">
+                <title>Chart Patterns</title>
+                <item identifier="lesson5_1" identifierref="lesson5_1_resource">
+                    <title>Reversal Patterns</title>
+                </item>
+                <item identifier="lesson5_2" identifierref="lesson5_2_resource">
+                    <title>Continuation Patterns</title>
+                </item>
+                <item identifier="lesson5_3" identifierref="lesson5_3_resource">
+                    <title>Candlestick Patterns</title>
+                </item>
+            </item>
+
+            <!-- Chapter 6: Technical Indicators -->
+            <item identifier="chapter6" identifierref="chapter6_resource">
+                <title>Technical Indicators</title>
+                <item identifier="lesson6_1" identifierref="lesson6_1_resource">
+                    <title>Momentum Indicators</title>
+                </item>
+                <item identifier="lesson6_2" identifierref="lesson6_2_resource">
+                    <title>Volume Indicators</title>
+                </item>
+                <item identifier="lesson6_3" identifierref="lesson6_3_resource">
+                    <title>Volatility and Breadth Indicators</title>
+                </item>
+            </item>
+
+            <!-- Chapter 7: Trading Strategies -->
+            <item identifier="chapter7" identifierref="chapter7_resource">
+                <title>Trading Strategies</title>
+                <item identifier="lesson7_1" identifierref="lesson7_1_resource">
+                    <title>Trend Following Strategies</title>
+                </item>
+                <item identifier="lesson7_2" identifierref="lesson7_2_resource">
+                    <title>Range Trading Strategies</title>
+                </item>
+                <item identifier="lesson7_3" identifierref="lesson7_3_resource">
+                    <title>Risk Management and Position Sizing</title>
+                </item>
+            </item>
+
+        </organization>
+    </organizations>
+
+    <resources>
+        <!-- Main course resources -->
+        <resource identifier="course_resource" type="webcontent" adlcp:scormtype="sco" href="index.html">
+            <file href="index.html"/>
+            <file href="course_structure.json"/>
+            <file href="hero_image.png"/>
+            <file href="chart_types_diagram.png"/>
+            <file href="candlestick_anatomy.png"/>
+            <file href="support_resistance_diagram.png"/>
+            <file href="chart_patterns_guide.png"/>
+        </resource>
+
+        <!-- Chapter 1 resources -->
+        <resource identifier="chapter1_resource" type="webcontent" adlcp:scormtype="sco" href="chapter1.html">
+            <file href="chapter1.html"/>
+        </resource>
+        <resource identifier="lesson1_1_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter1.html"/>
+        </resource>
+        <resource identifier="lesson1_2_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter1_lesson2.html"/>
+        </resource>
+        <resource identifier="lesson1_3_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter1_lesson3.html"/>
+        </resource>
+
+        <!-- Chapter 2 resources -->
+        <resource identifier="chapter2_resource" type="webcontent" adlcp:scormtype="sco" href="chapter2.html">
+            <file href="chapter2.html"/>
+        </resource>
+        <resource identifier="lesson2_1_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter2.html"/>
+        </resource>
+        <resource identifier="lesson2_2_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter2_lesson2.html"/>
+        </resource>
+        <resource identifier="lesson2_3_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter2_lesson3.html"/>
+        </resource>
+
+        <!-- Chapter 3 resources -->
+        <resource identifier="chapter3_resource" type="webcontent" adlcp:scormtype="sco" href="chapter3.html">
+            <file href="chapter3.html"/>
+        </resource>
+        <resource identifier="lesson3_1_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter3.html"/>
+        </resource>
+        <resource identifier="lesson3_2_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter3_lesson2.html"/>
+        </resource>
+        <resource identifier="lesson3_3_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter3_lesson3.html"/>
+        </resource>
+
+        <!-- Chapter 4 resources -->
+        <resource identifier="chapter4_resource" type="webcontent" adlcp:scormtype="sco" href="chapter4.html">
+            <file href="chapter4.html"/>
+        </resource>
+        <resource identifier="lesson4_1_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter4.html"/>
+        </resource>
+        <resource identifier="lesson4_2_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter4_lesson2.html"/>
+        </resource>
+        <resource identifier="lesson4_3_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter4_lesson3.html"/>
+        </resource>
+
+        <!-- Chapter 5 resources -->
+        <resource identifier="chapter5_resource" type="webcontent" adlcp:scormtype="sco" href="chapter5.html">
+            <file href="chapter5.html"/>
+        </resource>
+        <resource identifier="lesson5_1_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter5.html"/>
+        </resource>
+        <resource identifier="lesson5_2_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter5_lesson2.html"/>
+        </resource>
+        <resource identifier="lesson5_3_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter5_lesson3.html"/>
+        </resource>
+
+        <!-- Chapter 6 resources -->
+        <resource identifier="chapter6_resource" type="webcontent" adlcp:scormtype="sco" href="chapter6.html">
+            <file href="chapter6.html"/>
+        </resource>
+        <resource identifier="lesson6_1_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter6.html"/>
+        </resource>
+        <resource identifier="lesson6_2_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter6_lesson2.html"/>
+        </resource>
+        <resource identifier="lesson6_3_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter6_lesson3.html"/>
+        </resource>
+
+        <!-- Chapter 7 resources -->
+        <resource identifier="chapter7_resource" type="webcontent" adlcp:scormtype="sco" href="chapter7.html">
+            <file href="chapter7.html"/>
+        </resource>
+        <resource identifier="lesson7_1_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter7.html"/>
+        </resource>
+        <resource identifier="lesson7_2_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter7_lesson2.html"/>
+        </resource>
+        <resource identifier="lesson7_3_resource" type="webcontent" adlcp:scormtype="asset">
+            <file href="chapter7_lesson3.html"/>
+        </resource>
+
+    </resources>
+
+</manifest>

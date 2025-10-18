@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: Trend Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .trend-demo { transition: all 0.3s ease; }
+        .trend-demo:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .moving-average-line { stroke-dasharray: 5,5; animation: dash 2s linear infinite; }
+        @keyframes dash { to { stroke-dashoffset: -10; } }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Chapter 4: Trend Analysis</h1>
+                        <p class="text-sm text-gray-600">Understanding market direction and momentum</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span id="lesson-progress">0%</span> Complete
+                    </div>
+                    <button onclick="toggleMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chapter Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mr-6">
+                        <i class="fas fa-trending-up text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Trend Analysis</h1>
+                        <p class="text-lg text-gray-600 mt-2">The art of following market direction</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 mb-6">
+                    <blockquote class="text-lg italic text-gray-700 text-center">
+                        "The trend is your friend until it bends at the end."
+                    </blockquote>
+                    <p class="text-sm text-gray-600 text-center mt-2">- Trading Proverb</p>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Trend analysis forms the backbone of technical analysis, providing the directional bias that guides all trading decisions. Understanding trends, their strength, and potential changes is crucial for successful trading and risk management.
+                </p>
+            </div>
+        </div>
+
+        <!-- Dow Theory -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-landmark text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Dow Theory</h2>
+                        <p class="text-gray-600">The foundation of modern trend analysis</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-alt text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Primary Trend</h4>
+                        <p class="text-sm text-gray-600 mb-3">Months to Years</p>
+                        <p class="text-xs text-gray-500">The major market direction. "The tide that raises all boats."</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-week text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Secondary Trend</h4>
+                        <p class="text-sm text-gray-600 mb-3">Weeks to Months</p>
+                        <p class="text-xs text-gray-500">Corrections against the primary trend. "The waves that go against the tide."</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-day text-white"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Minor Trend</h4>
+                        <p class="text-sm text-gray-600 mb-3">Days to Weeks</p>
+                        <p class="text-xs text-gray-500">Short-term fluctuations. "The ripples on the water."</p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-6">
+                    <h4 class="font-semibold text-blue-900 mb-3">Key Principles of Dow Theory</h4>
+                    <div class="space-y-2 text-blue-800">
+                        <p><strong>1. Trends Continue:</strong> Once established, trends tend to continue until a definitive reversal signal occurs.</p>
+                        <p><strong>2. Volume Confirmation:</strong> Volume should confirm the trend direction - increasing during advances in uptrends.</p>
+                        <p><strong>3. Index Confirmation:</strong> Major trends should be confirmed by multiple market indices.</p>
+                        <p><strong>4. Trend Reversal Signals:</strong> Break of trendlines and failure to make new highs/lows signal potential reversals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trend Types -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Uptrend -->
+            <div class="trend-demo bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-arrow-trend-up text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Uptrend</h3>
+                            <p class="text-sm text-gray-600">Higher highs and higher lows</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-green-900 mb-2">Characteristics</h4>
+                            <ul class="space-y-1 text-sm text-green-800">
+                                <li>• Successive higher peaks</li>
+                                <li>• Successive higher troughs</li>
+                                <li>• Buying pressure dominates</li>
+                                <li>• "Buy the dips" mentality</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-green-900 mb-2">Trading Strategy</h4>
+                            <p class="text-green-800 text-sm">
+                                Look for buying opportunities on pullbacks to support levels or trendline bounces.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Downtrend -->
+            <div class="trend-demo bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-arrow-trend-down text-red-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Downtrend</h3>
+                            <p class="text-sm text-gray-600">Lower highs and lower lows</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-red-900 mb-2">Characteristics</h4>
+                            <ul class="space-y-1 text-sm text-red-800">
+                                <li>• Successive lower peaks</li>
+                                <li>• Successive lower troughs</li>
+                                <li>• Selling pressure dominates</li>
+                                <li>• "Sell the rallies" mentality</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-red-900 mb-2">Trading Strategy</h4>
+                            <p class="text-red-800 text-sm">
+                                Look for selling opportunities on rallies to resistance levels or trendline rejections.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sideways Trend -->
+            <div class="trend-demo bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-arrows-left-right text-gray-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Sideways Trend</h3>
+                            <p class="text-sm text-gray-600">Horizontal price movement</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-900 mb-2">Characteristics</h4>
+                            <ul class="space-y-1 text-sm text-gray-800">
+                                <li>• Horizontal support and resistance</li>
+                                <li>• No clear directional bias</li>
+                                <li>• Balanced buying and selling</li>
+                                <li>• Consolidation phase</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-900 mb-2">Trading Strategy</h4>
+                            <p class="text-gray-800 text-sm">
+                                Buy at support and sell at resistance until a breakout occurs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Trend Drawing -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-pencil text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Interactive Trend Analysis</h2>
+                        <p class="text-gray-600">Practice drawing trendlines and identifying trend changes</p>
+                    </div>
+                </div>
+
+                <div id="trend-chart" class="w-full h-96 mb-6"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-blue-900 mb-3">Trend Drawing Tools</h4>
+                        <div class="space-y-2">
+                            <button onclick="drawUptrend()" class="w-full px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+                                Draw Uptrend Line
+                            </button>
+                            <button onclick="drawDowntrend()" class="w-full px-3 py-2 bg-red-600 text-white rounded text-sm hover:bg-red-700">
+                                Draw Downtrend Line
+                            </button>
+                            <button onclick="clearTrends()" class="w-full px-3 py-2 bg-gray-600 text-white rounded text-sm hover:bg-gray-700">
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-green-900 mb-3">Current Trend Analysis</h4>
+                        <div id="trend-analysis" class="space-y-2 text-sm text-green-800">
+                            <p>Draw trendlines to see analysis</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-purple-900 mb-3">Trading Signals</h4>
+                        <div id="trading-signals" class="space-y-2 text-sm text-purple-800">
+                            <p>Analysis will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moving Averages -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-wave-square text-orange-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Moving Averages</h2>
+                        <p class="text-gray-600">Dynamic trend indicators and support/resistance</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-blue-900 mb-4">Simple Moving Average (SMA)</h4>
+                            <p class="text-blue-800 text-sm mb-4">
+                                Calculates the arithmetic mean of prices over a specified period, giving equal weight to all data points.
+                            </p>
+                            <div class="space-y-2 text-xs text-blue-700">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>Smooth and stable</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>Lag is more pronounced</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>Good for long-term trends</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-green-900 mb-4">Exponential Moving Average (EMA)</h4>
+                            <p class="text-green-800 text-sm mb-4">
+                                Gives more weight to recent prices, making it more responsive to current price action.
+                            </p>
+                            <div class="space-y-2 text-xs text-green-700">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>More responsive</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>Less lag</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>Popular for entries</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-purple-900 mb-4">Common Periods</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-purple-800 font-medium">20-period</span>
+                                    <span class="text-purple-600 text-sm">Short-term trend</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-purple-800 font-medium">50-period</span>
+                                    <span class="text-purple-600 text-sm">Medium-term trend</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-purple-800 font-medium">200-period</span>
+                                    <span class="text-purple-600 text-sm">Long-term trend</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-orange-900 mb-4">Trading Signals</h4>
+                            <div class="space-y-2 text-sm text-orange-800">
+                                <div class="flex items-center">
+                                    <i class="fas fa-arrow-up text-green-500 mr-2"></i>
+                                    <span><strong>Golden Cross:</strong> 50-day above 200-day</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-arrow-down text-red-500 mr-2"></i>
+                                    <span><strong>Death Cross:</strong> 50-day below 200-day</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-hand-paper text-blue-500 mr-2"></i>
+                                    <span><strong>Support/Resistance:</strong> Dynamic levels</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Moving Average Chart -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-gray-900 mb-4">Moving Average Crossover Example</h4>
+                    <div id="ma-chart" class="w-full h-64"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trend Strength Indicators -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-tachometer-alt text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Trend Strength Assessment</h2>
+                        <p class="text-gray-600">Measuring the power and sustainability of trends</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-bolt text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Strong Trend</h4>
+                        <p class="text-sm text-gray-600">Steep angle, consistent direction, minimal pullbacks</p>
+                    </div>
+
+                    <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-wave-square text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Moderate Trend</h4>
+                        <p class="text-sm text-gray-600">Gentle slope, some pullbacks, overall direction clear</p>
+                    </div>
+
+                    <div class="text-center p-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg">
+                        <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-pause text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Weak Trend</h4>
+                        <p class="text-sm text-gray-600">Shallow angle, frequent reversals, uncertain direction</p>
+                    </div>
+
+                    <div class="text-center p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg">
+                        <div class="w-16 h-16 bg-gray-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-arrows-alt-h text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">No Trend</h4>
+                        <p class="text-sm text-gray-600">Horizontal movement, ranging market, indecision</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center">
+            <button onclick="goBack()" class="flex items-center text-gray-600 hover:text-gray-900">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Course
+            </button>
+            <button onclick="completeCourse()" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">
+                Complete Course
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let trendLines = [];
+        let currentTrend = 'none';
+
+        function initializeCharts() {
+            // Generate sample price data for trend chart
+            const dates = [];
+            const prices = [];
+            let basePrice = 100;
+            
+            for (let i = 0; i < 60; i++) {
+                dates.push(`Day ${i + 1}`);
+                // Create an uptrend with some volatility
+                basePrice += 0.5 + (Math.random() - 0.5) * 2;
+                prices.push(basePrice);
+            }
+
+            const trace = {
+                x: dates,
+                y: prices,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Price',
+                line: { color: '#3b82f6', width: 2 },
+                marker: { size: 4 }
+            };
+
+            const layout = {
+                title: 'Interactive Trend Analysis - Click to practice drawing trendlines',
+                xaxis: { title: 'Time Period' },
+                yaxis: { title: 'Price ($)' },
+                showlegend: false,
+                margin: { t: 40, r: 40, b: 40, l: 60 }
+            };
+
+            Plotly.newPlot('trend-chart', [trace], layout, {responsive: true});
+
+            // Initialize moving average chart
+            initializeMAChart();
+        }
+
+        function initializeMAChart() {
+            const dates = [];
+            const priceData = [];
+            const ma20 = [];
+            const ma50 = [];
+            let basePrice = 100;
+            
+            for (let i = 0; i < 100; i++) {
+                dates.push(`Day ${i + 1}`);
+                basePrice += (Math.random() - 0.5) * 2;
+                priceData.push(basePrice);
+                
+                // Calculate moving averages
+                if (i >= 19) {
+                    const sum20 = priceData.slice(i - 19, i + 1).reduce((a, b) => a + b, 0);
+                    ma20.push(sum20 / 20);
+                } else {
+                    ma20.push(null);
+                }
+                
+                if (i >= 49) {
+                    const sum50 = priceData.slice(i - 49, i + 1).reduce((a, b) => a + b, 0);
+                    ma50.push(sum50 / 50);
+                } else {
+                    ma50.push(null);
+                }
+            }
+
+            const trace1 = {
+                x: dates,
+                y: priceData,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Price',
+                line: { color: '#3b82f6', width: 2 }
+            };
+
+            const trace2 = {
+                x: dates,
+                y: ma20,
+                type: 'scatter',
+                mode: 'lines',
+                name: '20-period MA',
+                line: { color: '#f59e0b', width: 2 }
+            };
+
+            const trace3 = {
+                x: dates,
+                y: ma50,
+                type: 'scatter',
+                mode: 'lines',
+                name: '50-period MA',
+                line: { color: '#ef4444', width: 2 }
+            };
+
+            const layout = {
+                title: 'Moving Average Crossover Signals',
+                xaxis: { title: 'Time Period' },
+                yaxis: { title: 'Price ($)' },
+                showlegend: true,
+                margin: { t: 40, r: 40, b: 40, l: 60 }
+            };
+
+            Plotly.newPlot('ma-chart', [trace1, trace2, trace3], layout, {responsive: true});
+        }
+
+        function drawUptrend() {
+            clearTrends();
+            
+            // Add uptrend line
+            const uptrendLine = {
+                type: 'line',
+                x0: 0,
+                x1: 1,
+                xref: 'paper',
+                y0: 102,
+                y1: 118,
+                line: {
+                    color: 'green',
+                    width: 3
+                }
+            };
+            
+            Plotly.relayout('trend-chart', {
+                shapes: [uptrendLine]
+            });
+            
+            currentTrend = 'uptrend';
+            updateTrendAnalysis();
+        }
+
+        function drawDowntrend() {
+            clearTrends();
+            
+            // Add downtrend line
+            const downtrendLine = {
+                type: 'line',
+                x0: 0,
+                x1: 1,
+                xref: 'paper',
+                y0: 118,
+                y1: 102,
+                line: {
+                    color: 'red',
+                    width: 3
+                }
+            };
+            
+            Plotly.relayout('trend-chart', {
+                shapes: [downtrendLine]
+            });
+            
+            currentTrend = 'downtrend';
+            updateTrendAnalysis();
+        }
+
+        function clearTrends() {
+            Plotly.relayout('trend-chart', { shapes: [] });
+            currentTrend = 'none';
+            updateTrendAnalysis();
+        }
+
+        function updateTrendAnalysis() {
+            const analysisContainer = document.getElementById('trend-analysis');
+            const signalsContainer = document.getElementById('trading-signals');
+            
+            if (currentTrend === 'uptrend') {
+                analysisContainer.innerHTML = `
+                    <div class="text-green-800">
+                        <div class="font-semibold mb-2">Uptrend Detected</div>
+                        <div class="text-xs space-y-1">
+                            <div>• Higher highs and higher lows</div>
+                            <div>• Buying pressure dominates</div>
+                            <div>• Trend slope: Moderate</div>
+                            <div>• Strength: Good</div>
+                        </div>
+                    </div>
+                `;
+                
+                signalsContainer.innerHTML = `
+                    <div class="text-green-800">
+                        <div class="font-semibold mb-2">Bullish Signals</div>
+                        <div class="text-xs space-y-1">
+                            <div>• Buy on pullbacks</div>
+                            <div>• Use trendline as support</div>
+                            <div>• Target: Higher highs</div>
+                            <div>• Stop: Below trendline</div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentTrend === 'downtrend') {
+                analysisContainer.innerHTML = `
+                    <div class="text-red-800">
+                        <div class="font-semibold mb-2">Downtrend Detected</div>
+                        <div class="text-xs space-y-1">
+                            <div>• Lower highs and lower lows</div>
+                            <div>• Selling pressure dominates</div>
+                            <div>• Trend slope: Steep</div>
+                            <div>• Strength: Strong</div>
+                        </div>
+                    </div>
+                `;
+                
+                signalsContainer.innerHTML = `
+                    <div class="text-red-800">
+                        <div class="font-semibold mb-2">Bearish Signals</div>
+                        <div class="text-xs space-y-1">
+                            <div>• Sell on rallies</div>
+                            <div>• Use trendline as resistance</div>
+                            <div>• Target: Lower lows</div>
+                            <div>• Stop: Above trendline</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                analysisContainer.innerHTML = '<p class="text-gray-600">Draw trendlines to see analysis</p>';
+                signalsContainer.innerHTML = '<p class="text-gray-600">Analysis will appear here</p>';
+            }
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('lesson-progress').textContent = percentage;
+            
+            // SCORM: Update progress
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_location', 'chapter4');
+                SCORM.set('cmi.core.lesson_status', percentage === 100 ? 'completed' : 'incomplete');
+            }
+        }
+
+        function completeCourse() {
+            updateProgress(100);
+            
+            // SCORM: Mark course complete
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_status', 'completed');
+                SCORM.set('cmi.core.score.raw', '100');
+                SCORM.save();
+            }
+            
+            // Save completion to localStorage
+            localStorage.setItem('courseProgress', '100');
+            
+            alert('Congratulations! You have completed the Technical Analysis Mastery course. Your certificate is ready for download.');
+            window.location.href = 'index.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            updateProgress(75); // Mark as advanced
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Technical Indicators</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .indicator-card { transition: all 0.3s ease; }
+        .indicator-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .indicator-demo { cursor: pointer; transition: all 0.2s ease; }
+        .indicator-demo:hover { background-color: #f8fafc; }
+        .indicator-demo.active { background-color: #dbeafe; border-color: #3b82f6; }
+        .signal-buy { color: #16a34a; }
+        .signal-sell { color: #dc2626; }
+        .signal-neutral { color: #6b7280; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Chapter 6: Technical Indicators</h1>
+                        <p class="text-sm text-gray-600">Mathematical tools for market analysis</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span id="lesson-progress">0%</span> Complete
+                    </div>
+                    <button onclick="toggleMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chapter Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mr-6">
+                        <i class="fas fa-calculator text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Technical Indicators</h1>
+                        <p class="text-lg text-gray-600 mt-2">Mathematical tools for market analysis</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 mb-6">
+                    <blockquote class="text-lg italic text-gray-700 text-center">
+                        "Indicators are like a thermometer - they don't predict the future, but they tell you what's happening now."
+                    </blockquote>
+                    <p class="text-sm text-gray-600 text-center mt-2">- Technical Analysis Wisdom</p>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Technical indicators are mathematical calculations based on price and volume data that help traders identify trends, momentum, and potential reversal points. They provide objective, quantifiable measures of market behavior to support trading decisions.
+                </p>
+            </div>
+        </div>
+
+        <!-- Indicator Categories -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Momentum Indicators -->
+            <div class="indicator-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-tachometer-alt text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Momentum Indicators</h3>
+                            <p class="text-sm text-gray-600">Measure speed and strength</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('rsi')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">RSI</h4>
+                                    <p class="text-sm text-gray-600">Relative Strength Index</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('macd')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">MACD</h4>
+                                    <p class="text-sm text-gray-600">Moving Average Convergence</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('stochastic')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Stochastic</h4>
+                                    <p class="text-sm text-gray-600">Stochastic Oscillator</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volume Indicators -->
+            <div class="indicator-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-volume-up text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Volume Indicators</h3>
+                            <p class="text-sm text-gray-600">Confirm price movements</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('obv')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">OBV</h4>
+                                    <p class="text-sm text-gray-600">On-Balance Volume</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('volume-roc')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Volume ROC</h4>
+                                    <p class="text-sm text-gray-600">Volume Rate of Change</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('cmf')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">CMF</h4>
+                                    <p class="text-sm text-gray-600">Chaikin Money Flow</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volatility Indicators -->
+            <div class="indicator-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-wave-square text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Volatility Indicators</h3>
+                            <p class="text-sm text-gray-600">Measure market uncertainty</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('bb')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Bollinger Bands</h4>
+                                    <p class="text-sm text-gray-600">Price volatility bands</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('atr')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">ATR</h4>
+                                    <p class="text-sm text-gray-600">Average True Range</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="indicator-demo p-3 border border-gray-200 rounded-lg" onclick="showIndicator('vix')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">VIX</h4>
+                                    <p class="text-sm text-gray-600">Fear Index</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Indicator Demo -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Interactive Indicator Analysis</h2>
+                        <p class="text-gray-600">Explore different indicators and their signals</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <div id="indicator-chart" class="w-full h-80 bg-gray-50 rounded-lg mb-4"></div>
+                        
+                        <div class="flex space-x-4">
+                            <button onclick="generateData()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Generate Data
+                            </button>
+                            <button onclick="addIndicator()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                Add Indicator
+                            </button>
+                            <button onclick="clearIndicators()" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">Select Indicator</h4>
+                            <div class="space-y-2">
+                                <button onclick="selectIndicator('rsi')" class="indicator-selector w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50">
+                                    RSI (Relative Strength Index)
+                                </button>
+                                <button onclick="selectIndicator('macd')" class="indicator-selector w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50">
+                                    MACD
+                                </button>
+                                <button onclick="selectIndicator('bb')" class="indicator-selector w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50">
+                                    Bollinger Bands
+                                </button>
+                                <button onclick="selectIndicator('stochastic')" class="indicator-selector w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50">
+                                    Stochastic Oscillator
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">Current Signals</h4>
+                            <div id="indicator-signals" class="space-y-2">
+                                <div class="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
+                                    Select an indicator to see signals
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">Indicator Settings</h4>
+                            <div id="indicator-settings" class="space-y-3">
+                                <div class="text-sm text-gray-600">
+                                    Settings will appear when indicator is selected
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RSI Deep Dive -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-tachometer-alt text-red-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">RSI: Relative Strength Index</h2>
+                        <p class="text-gray-600">The momentum oscillator that measures speed and change of price movements</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-blue-900 mb-3">How RSI Works</h4>
+                            <div class="space-y-2 text-blue-800 text-sm">
+                                <p>• Compares average gains to average losses over 14 periods</p>
+                                <p>• Values range from 0 to 100</p>
+                                <p>• Above 70 = Overbought conditions</p>
+                                <p>• Below 30 = Oversold conditions</p>
+                                <p>• 50 = Neutral momentum</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-green-900 mb-3">Trading Signals</h4>
+                            <div class="space-y-2 text-green-800 text-sm">
+                                <p><strong class="signal-buy">• Oversold (< 30):</strong> Potential buying opportunity</p>
+                                <p><strong class="signal-sell">• Overbought (> 70):</strong> Potential selling opportunity</p>
+                                <p><strong class="signal-neutral">• Divergence:</strong> Price vs RSI disagreement</p>
+                                <p><strong class="signal-neutral">• Centerline (50):</strong> Trend confirmation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-purple-900 mb-3">RSI Calculation</h4>
+                            <div class="text-purple-800 text-sm space-y-2">
+                                <p><strong>RSI = 100 - (100 / (1 + RS))</strong></p>
+                                <p>Where RS = Average Gain / Average Loss</p>
+                                <p>Default period: 14</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-orange-900 mb-3">Best Practices</h4>
+                            <div class="text-orange-800 text-sm space-y-1">
+                                <p>• Use in trending markets</p>
+                                <p>• Combine with other indicators</p>
+                                <p>• Watch for divergences</p>
+                                <p>• Adjust periods for different timeframes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RSI Chart Example -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-gray-900 mb-4">RSI Example with Signals</h4>
+                    <div id="rsi-chart" class="w-full h-64"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indicator Combinations -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-layer-group text-indigo-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Indicator Combinations</h2>
+                        <p class="text-gray-600">Using multiple indicators for confirmation</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6">
+                        <h4 class="font-semibold text-gray-900 mb-4">Trend Following</h4>
+                        <div class="space-y-2 text-sm text-blue-800">
+                            <div>• Moving Averages</div>
+                            <div>• MACD</div>
+                            <div>• ADX</div>
+                        </div>
+                        <p class="text-blue-700 text-xs mt-3">For identifying and following trends</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6">
+                        <h4 class="font-semibold text-gray-900 mb-4">Momentum Trading</h4>
+                        <div class="space-y-2 text-sm text-green-800">
+                            <div>• RSI</div>
+                            <div>• Stochastic</div>
+                            <div>• Williams %R</div>
+                        </div>
+                        <p class="text-green-700 text-xs mt-3">For timing entries and exits</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6">
+                        <h4 class="font-semibold text-gray-900 mb-4">Volatility Trading</h4>
+                        <div class="space-y-2 text-sm text-purple-800">
+                            <div>• Bollinger Bands</div>
+                            <div>• ATR</div>
+                            <div>• Keltner Channels</div>
+                        </div>
+                        <p class="text-purple-700 text-xs mt-3">For range and breakout trading</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center">
+            <button onclick="goBack()" class="flex items-center text-gray-600 hover:text-gray-900">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Course
+            </button>
+            <button onclick="nextChapter()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Next Chapter
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentIndicator = null;
+        let chartData = null;
+
+        function showIndicator(type) {
+            // Remove previous selections
+            document.querySelectorAll('.indicator-demo').forEach(demo => {
+                demo.classList.remove('active');
+            });
+            
+            // Select current indicator
+            event.currentTarget.classList.add('active');
+            
+            // Show indicator details
+            const details = {
+                'rsi': {
+                    name: 'Relative Strength Index (RSI)',
+                    description: 'Measures momentum and identifies overbought/oversold conditions',
+                    range: '0-100',
+                    signals: 'Above 70: Overbought, Below 30: Oversold'
+                },
+                'macd': {
+                    name: 'MACD',
+                    description: 'Trend-following momentum indicator showing relationship between two moving averages',
+                    range: 'Unbounded',
+                    signals: 'Crossovers signal trend changes'
+                },
+                'bb': {
+                    name: 'Bollinger Bands',
+                    description: 'Volatility bands placed above and below a moving average',
+                    range: 'Price-based',
+                    signals: 'Price touching bands indicates extreme levels'
+                }
+            };
+            
+            if (details[type]) {
+                const detail = details[type];
+                alert(`${detail.name}\n\n${detail.description}\n\nRange: ${detail.range}\n\nSignals: ${detail.signals}`);
+            }
+        }
+
+        function generateData() {
+            // Generate sample price data
+            const dates = [];
+            const prices = [];
+            let basePrice = 100;
+            
+            for (let i = 0; i < 50; i++) {
+                dates.push(`Day ${i + 1}`);
+                basePrice += (Math.random() - 0.5) * 3;
+                prices.push(basePrice);
+            }
+            
+            chartData = { dates, prices };
+            
+            const trace = {
+                x: dates,
+                y: prices,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Price',
+                line: { color: '#3b82f6', width: 2 },
+                marker: { size: 4 }
+            };
+
+            const layout = {
+                title: 'Price Chart with Indicators',
+                xaxis: { title: 'Time Period' },
+                yaxis: { title: 'Price ($)' },
+                showlegend: true,
+                margin: { t: 40, r: 40, b: 40, l: 60 }
+            };
+
+            Plotly.newPlot('indicator-chart', [trace], layout, {responsive: true});
+        }
+
+        function selectIndicator(type) {
+            // Remove previous selections
+            document.querySelectorAll('.indicator-selector').forEach(selector => {
+                selector.className = 'indicator-selector w-full p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50';
+            });
+            
+            // Select current indicator
+            event.currentTarget.className = 'indicator-selector w-full p-3 border border-gray-200 rounded-lg text-left bg-blue-50 border-blue-300';
+            
+            currentIndicator = type;
+            updateIndicatorInfo(type);
+        }
+
+        function updateIndicatorInfo(type) {
+            const signalsContainer = document.getElementById('indicator-signals');
+            const settingsContainer = document.getElementById('indicator-settings');
+            
+            const indicatorData = {
+                'rsi': {
+                    signals: [
+                        { text: 'Overbought (>70): Consider selling', class: 'signal-sell' },
+                        { text: 'Oversold (<30): Consider buying', class: 'signal-buy' },
+                        { text: 'Neutral (30-70): Hold', class: 'signal-neutral' }
+                    ],
+                    settings: ['Period: 14', 'Overbought: 70', 'Oversold: 30']
+                },
+                'macd': {
+                    signals: [
+                        { text: 'MACD above signal: Bullish', class: 'signal-buy' },
+                        { text: 'MACD below signal: Bearish', class: 'signal-sell' },
+                        { text: 'Crossover: Trend change', class: 'signal-neutral' }
+                    ],
+                    settings: ['Fast Period: 12', 'Slow Period: 26', 'Signal: 9']
+                },
+                'bb': {
+                    signals: [
+                        { text: 'Price above upper band: Overbought', class: 'signal-sell' },
+                        { text: 'Price below lower band: Oversold', class: 'signal-buy' },
+                        { text: 'Price near middle: Neutral', class: 'signal-neutral' }
+                    ],
+                    settings: ['Period: 20', 'Std Dev: 2', 'Moving Average: SMA']
+                },
+                'stochastic': {
+                    signals: [
+                        { text: '%K > %D: Bullish momentum', class: 'signal-buy' },
+                        { text: '%K < %D: Bearish momentum', class: 'signal-sell' },
+                        { text: 'Above 80: Overbought', class: 'signal-sell' }
+                    ],
+                    settings: ['%K Period: 14', '%D Period: 3', 'Smooth: 3']
+                }
+            };
+            
+            const data = indicatorData[type];
+            if (!data) return;
+            
+            // Update signals
+            signalsContainer.innerHTML = data.signals.map(signal => `
+                <div class="p-3 rounded-lg bg-gray-50 text-sm ${signal.class}">
+                    ${signal.text}
+                </div>
+            `).join('');
+            
+            // Update settings
+            settingsContainer.innerHTML = data.settings.map(setting => `
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-600">${setting.split(':')[0]}:</span>
+                    <span class="font-medium">${setting.split(':')[1]}</span>
+                </div>
+            `).join('');
+        }
+
+        function addIndicator() {
+            if (!currentIndicator || !chartData) {
+                alert('Please select an indicator and generate data first');
+                return;
+            }
+            
+            let indicatorTrace;
+            
+            switch(currentIndicator) {
+                case 'rsi':
+                    indicatorTrace = calculateRSI(chartData.prices);
+                    break;
+                case 'macd':
+                    indicatorTrace = calculateMACD(chartData.prices);
+                    break;
+                case 'bb':
+                    indicatorTrace = calculateBollingerBands(chartData.prices);
+                    break;
+                default:
+                    return;
+            }
+            
+            Plotly.addTraces('indicator-chart', indicatorTrace);
+        }
+
+        function calculateRSI(prices, period = 14) {
+            const rsi = [];
+            let gains = 0, losses = 0;
+            
+            // Calculate initial average gain/loss
+            for (let i = 1; i <= period; i++) {
+                const change = prices[i] - prices[i-1];
+                if (change > 0) gains += change;
+                else losses -= change;
+            }
+            
+            let avgGain = gains / period;
+            let avgLoss = losses / period;
+            
+            for (let i = period; i < prices.length; i++) {
+                const change = prices[i] - prices[i-1];
+                avgGain = (avgGain * (period - 1) + Math.max(0, change)) / period;
+                avgLoss = (avgLoss * (period - 1) + Math.max(0, -change)) / period;
+                
+                const rs = avgGain / avgLoss;
+                rsi.push(100 - (100 / (1 + rs)));
+            }
+            
+            return {
+                x: chartData.dates.slice(period),
+                y: rsi,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'RSI',
+                line: { color: '#ef4444', width: 2 },
+                yaxis: 'y2'
+            };
+        }
+
+        function calculateMACD(prices) {
+            // Simplified MACD calculation
+            const ema12 = calculateEMA(prices, 12);
+            const ema26 = calculateEMA(prices, 26);
+            const macd = ema12.map((val, i) => val - ema26[i]);
+            
+            return {
+                x: chartData.dates.slice(26),
+                y: macd,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'MACD',
+                line: { color: '#8b5cf6', width: 2 },
+                yaxis: 'y2'
+            };
+        }
+
+        function calculateEMA(prices, period) {
+            const ema = [prices[0]];
+            const multiplier = 2 / (period + 1);
+            
+            for (let i = 1; i < prices.length; i++) {
+                ema.push((prices[i] * multiplier) + (ema[i-1] * (1 - multiplier)));
+            }
+            
+            return ema;
+        }
+
+        function calculateBollingerBands(prices, period = 20, stdDev = 2) {
+            const sma = [];
+            const upperBand = [];
+            const lowerBand = [];
+            
+            for (let i = period - 1; i < prices.length; i++) {
+                const slice = prices.slice(i - period + 1, i + 1);
+                const mean = slice.reduce((a, b) => a + b) / period;
+                const variance = slice.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / period;
+                const standardDeviation = Math.sqrt(variance);
+                
+                sma.push(mean);
+                upperBand.push(mean + (standardDeviation * stdDev));
+                lowerBand.push(mean - (standardDeviation * stdDev));
+            }
+            
+            return [
+                {
+                    x: chartData.dates.slice(period - 1),
+                    y: upperBand,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: 'Upper Band',
+                    line: { color: '#10b981', width: 1, dash: 'dash' }
+                },
+                {
+                    x: chartData.dates.slice(period - 1),
+                    y: sma,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: 'SMA',
+                    line: { color: '#6b7280', width: 2 }
+                },
+                {
+                    x: chartData.dates.slice(period - 1),
+                    y: lowerBand,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: 'Lower Band',
+                    line: { color: '#10b981', width: 1, dash: 'dash' }
+                }
+            ];
+        }
+
+        function clearIndicators() {
+            if (chartData) {
+                const trace = {
+                    x: chartData.dates,
+                    y: chartData.prices,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    name: 'Price',
+                    line: { color: '#3b82f6', width: 2 },
+                    marker: { size: 4 }
+                };
+
+                const layout = {
+                    title: 'Price Chart with Indicators',
+                    xaxis: { title: 'Time Period' },
+                    yaxis: { title: 'Price ($)' },
+                    showlegend: true,
+                    margin: { t: 40, r: 40, b: 40, l: 60 }
+                };
+
+                Plotly.newPlot('indicator-chart', [trace], layout, {responsive: true});
+            }
+        }
+
+        function initializeRSIChart() {
+            // Generate sample RSI data with signals
+            const dates = [];
+            const rsi = [];
+            const price = [];
+            
+            for (let i = 0; i < 50; i++) {
+                dates.push(`Day ${i + 1}`);
+                const rsiValue = 30 + Math.sin(i * 0.2) * 40 + Math.random() * 10;
+                rsi.push(Math.max(0, Math.min(100, rsiValue)));
+                price.push(100 + Math.sin(i * 0.1) * 10 + Math.random() * 5);
+            }
+
+            const trace1 = {
+                x: dates,
+                y: rsi,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'RSI',
+                line: { color: '#ef4444', width: 2 },
+                yaxis: 'y'
+            };
+
+            const trace2 = {
+                x: dates,
+                y: price,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Price',
+                line: { color: '#3b82f6', width: 2 },
+                yaxis: 'y2'
+            };
+
+            const layout = {
+                title: 'RSI with Price Action',
+                xaxis: { title: 'Time Period' },
+                yaxis: {
+                    title: 'RSI',
+                    side: 'left',
+                    range: [0, 100],
+                    tickvals: [30, 50, 70],
+                    ticktext: ['Oversold', 'Neutral', 'Overbought']
+                },
+                yaxis2: {
+                    title: 'Price ($)',
+                    side: 'right',
+                    overlaying: 'y'
+                },
+                showlegend: true,
+                margin: { t: 40, r: 80, b: 40, l: 80 }
+            };
+
+            Plotly.newPlot('rsi-chart', [trace1, trace2], layout, {responsive: true});
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('lesson-progress').textContent = percentage;
+            
+            // SCORM: Update progress
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_location', 'chapter6');
+                SCORM.set('cmi.core.lesson_status', percentage === 100 ? 'completed' : 'incomplete');
+            }
+        }
+
+        function nextChapter() {
+            updateProgress(100);
+            window.location.href = 'chapter7.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeRSIChart();
+            updateProgress(70); // Mark as advanced
+        });
+    </script>
+</body>
+</html>

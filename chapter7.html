@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7: Trading Strategies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .strategy-card { transition: all 0.3s ease; }
+        .strategy-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .strategy-demo { cursor: pointer; transition: all 0.2s ease; }
+        .strategy-demo:hover { background-color: #f8fafc; }
+        .strategy-demo.active { background-color: #dbeafe; border-color: #3b82f6; }
+        .risk-meter { background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #ef4444 100%); }
+        .profit-target { background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Chapter 7: Trading Strategies</h1>
+                        <p class="text-sm text-gray-600">Systematic approaches to trading</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span id="lesson-progress">0%</span> Complete
+                    </div>
+                    <button onclick="toggleMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chapter Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mr-6">
+                        <i class="fas fa-chess text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Trading Strategies</h1>
+                        <p class="text-lg text-gray-600 mt-2">Systematic approaches to market success</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 mb-6">
+                    <blockquote class="text-lg italic text-gray-700 text-center">
+                        "The goal of a successful trader is to make the best trades. Money is secondary."
+                    </blockquote>
+                    <p class="text-sm text-gray-600 text-center mt-2">- Alexander Elder</p>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Trading strategies provide the framework for making consistent, disciplined trading decisions. A well-defined strategy includes entry criteria, risk management rules, and exit strategies that remove emotion from trading and improve probability of success.
+                </p>
+            </div>
+        </div>
+
+        <!-- Strategy Categories -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Trend Following -->
+            <div class="strategy-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-arrow-trend-up text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Trend Following</h3>
+                            <p class="text-sm text-gray-600">"The trend is your friend"</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 mb-4">
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('moving-average')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Moving Average Crossover</h4>
+                                    <p class="text-sm text-gray-600">Golden cross and death cross</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('breakout')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Breakout Trading</h4>
+                                    <p class="text-sm text-gray-600">Trading range breakouts</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('pullback')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Pullback Trading</h4>
+                                    <p class="text-sm text-gray-600">Enter on corrections</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h5 class="font-semibold text-green-900 mb-2">Characteristics</h5>
+                        <ul class="text-green-800 text-sm space-y-1">
+                            <li>• High win rate in trending markets</li>
+                            <li>• Let profits run, cut losses short</li>
+                            <li>• Many small losses, few big wins</li>
+                            <li>• Requires patience and discipline</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Range Trading -->
+            <div class="strategy-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-arrows-left-right text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Range Trading</h3>
+                            <p class="text-sm text-gray-600">Buy low, sell high</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 mb-4">
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('support-resistance')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Support & Resistance</h4>
+                                    <p class="text-sm text-gray-600">Trade level bounces</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('mean-reversion')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Mean Reversion</h4>
+                                    <p class="text-sm text-gray-600">Return to average</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('oscillator')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Oscillator Trading</h4>
+                                    <p class="text-sm text-gray-600">RSI and Stochastic</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h5 class="font-semibold text-blue-900 mb-2">Characteristics</h5>
+                        <ul class="text-blue-800 text-sm space-y-1">
+                            <li>• Works in sideways markets</li>
+                            <li>• High frequency of trades</li>
+                            <li>• Smaller profits per trade</li>
+                            <li>• Requires tight risk management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Management -->
+            <div class="strategy-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-shield-alt text-red-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Risk Management</h3>
+                            <p class="text-sm text-gray-600">Protect your capital</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 mb-4">
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('position-sizing')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Position Sizing</h4>
+                                    <p class="text-sm text-gray-600">Calculate trade size</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('stop-loss')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Stop Loss Strategies</h4>
+                                    <p class="text-sm text-gray-600">Protective exit orders</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="strategy-demo p-3 border border-gray-200 rounded-lg" onclick="showStrategy('diversification')">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Diversification</h4>
+                                    <p class="text-sm text-gray-600">Spread risk across trades</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <h5 class="font-semibold text-red-900 mb-2">Key Principles</h5>
+                        <ul class="text-red-800 text-sm space-y-1">
+                            <li>• Never risk more than 2% per trade</li>
+                            <li>• Always use stop losses</li>
+                            <li>• Risk-to-reward ratio of 2:1 minimum</li>
+                            <li>• Protect capital above all else</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Strategy Simulator -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-gamepad text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Strategy Simulator</h2>
+                        <p class="text-gray-600">Test different strategies with virtual money</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <div id="strategy-chart" class="w-full h-80 bg-gray-50 rounded-lg mb-4"></div>
+                        
+                        <div class="flex space-x-4">
+                            <button onclick="startSimulation()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Start Simulation
+                            </button>
+                            <button onclick="placeTrade()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                Place Trade
+                            </button>
+                            <button onclick="resetSimulation()" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">Portfolio Status</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-600">Starting Capital:</span>
+                                    <span class="font-semibold">$10,000</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-600">Current Balance:</span>
+                                    <span class="font-semibold" id="current-balance">$10,000</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-600">Total P&L:</span>
+                                    <span class="font-semibold" id="total-pnl">$0</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-gray-600">Win Rate:</span>
+                                    <span class="font-semibold" id="win-rate">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">Trade Log</h4>
+                            <div id="trade-log" class="space-y-2 max-h-48 overflow-y-auto">
+                                <div class="text-sm text-gray-500 text-center py-4">
+                                    No trades yet. Start simulation to begin.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">Risk Parameters</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm text-gray-600 mb-1">Risk per Trade (%)</label>
+                                    <input type="range" min="1" max="5" value="2" class="w-full" id="risk-percentage" onchange="updateRiskDisplay()">
+                                    <div class="text-sm text-gray-600 mt-1">Current: <span id="risk-display">2%</span></div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-600 mb-1">Risk-Reward Ratio</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded" id="risk-reward">
+                                        <option value="1">1:1</option>
+                                        <option value="2" selected>2:1</option>
+                                        <option value="3">3:1</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Management Calculator -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-calculator text-orange-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Position Size Calculator</h2>
+                        <p class="text-gray-600">Calculate optimal position size based on risk parameters</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Account Size ($)</label>
+                        <input type="number" id="account-size" value="10000" class="w-full p-3 border border-gray-300 rounded-lg" onchange="calculatePositionSize()">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Risk Percentage (%)</label>
+                        <input type="number" id="risk-percent" value="2" min="0.5" max="10" step="0.5" class="w-full p-3 border border-gray-300 rounded-lg" onchange="calculatePositionSize()">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Entry Price ($)</label>
+                        <input type="number" id="entry-price" value="100" class="w-full p-3 border border-gray-300 rounded-lg" onchange="calculatePositionSize()">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stop Loss Price ($)</label>
+                        <input type="number" id="stop-price" value="95" class="w-full p-3 border border-gray-300 rounded-lg" onchange="calculatePositionSize()">
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-blue-50 rounded-lg">
+                    <h4 class="font-semibold text-blue-900 mb-4">Position Size Results</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="risk-amount">$200</div>
+                            <div class="text-sm text-blue-800">Risk Amount</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="position-size">40</div>
+                            <div class="text-sm text-blue-800">Shares/Contracts</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="position-value">$4,000</div>
+                            <div class="text-sm text-blue-800">Position Value</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center">
+            <button onclick="goBack()" class="flex items-center text-gray-600 hover:text-gray-900">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Course
+            </button>
+            <button onclick="nextChapter()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Next Chapter
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let simulationData = {
+            balance: 10000,
+            startingBalance: 10000,
+            trades: [],
+            wins: 0,
+            totalTrades: 0,
+            currentPrice: 100,
+            isRunning: false
+        };
+
+        function showStrategy(strategyType) {
+            // Remove previous selections
+            document.querySelectorAll('.strategy-demo').forEach(demo => {
+                demo.classList.remove('active');
+            });
+            
+            // Select current strategy
+            event.currentTarget.classList.add('active');
+            
+            // Show strategy details
+            const strategies = {
+                'moving-average': {
+                    name: 'Moving Average Crossover',
+                    description: 'Buy when short MA crosses above long MA, sell when it crosses below',
+                    timeframe: 'Medium to long-term',
+                    risk: 'Medium'
+                },
+                'breakout': {
+                    name: 'Breakout Trading',
+                    description: 'Enter trades when price breaks above resistance or below support',
+                    timeframe: 'Short to medium-term',
+                    risk: 'High'
+                },
+                'support-resistance': {
+                    name: 'Support & Resistance',
+                    description: 'Buy at support levels, sell at resistance levels',
+                    timeframe: 'Short-term',
+                    risk: 'Low to medium'
+                }
+            };
+            
+            const strategy = strategies[strategyType];
+            if (strategy) {
+                alert(`${strategy.name}\n\n${strategy.description}\n\nTimeframe: ${strategy.timeframe}\nRisk Level: ${strategy.risk}`);
+            }
+        }
+
+        function startSimulation() {
+            simulationData.isRunning = true;
+            generatePriceData();
+            updatePortfolioDisplay();
+            
+            // SCORM: Track simulation start
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.interactions.n.id', 'trading_simulation');
+                SCORM.set('cmi.interactions.n.type', 'other');
+            }
+        }
+
+        function generatePriceData() {
+            const dates = [];
+            const prices = [];
+            let basePrice = simulationData.currentPrice;
+            
+            for (let i = 0; i < 100; i++) {
+                dates.push(`Day ${i + 1}`);
+                basePrice += (Math.random() - 0.5) * 4;
+                prices.push(basePrice);
+            }
+            
+            simulationData.currentPrice = basePrice;
+            
+            const trace = {
+                x: dates,
+                y: prices,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Price',
+                line: { color: '#3b82f6', width: 2 }
+            };
+
+            const layout = {
+                title: 'Trading Strategy Simulation',
+                xaxis: { title: 'Time Period' },
+                yaxis: { title: 'Price ($)' },
+                showlegend: false,
+                margin: { t: 40, r: 40, b: 40, l: 60 }
+            };
+
+            Plotly.newPlot('strategy-chart', [trace], layout, {responsive: true});
+        }
+
+        function placeTrade() {
+            if (!simulationData.isRunning) {
+                alert('Please start the simulation first');
+                return;
+            }
+            
+            const riskPercentage = parseFloat(document.getElementById('risk-percentage').value);
+            const riskReward = parseFloat(document.getElementById('risk-reward').value);
+            
+            // Calculate position size
+            const riskAmount = simulationData.balance * (riskPercentage / 100);
+            const stopLoss = simulationData.currentPrice * 0.95; // 5% stop loss
+            const positionSize = Math.floor(riskAmount / (simulationData.currentPrice - stopLoss));
+            
+            if (positionSize <= 0) {
+                alert('Position size too small. Adjust risk parameters.');
+                return;
+            }
+            
+            // Simulate trade outcome
+            const isWin = Math.random() > 0.4; // 60% win rate
+            const profitLoss = isWin ? riskAmount * riskReward : -riskAmount;
+            
+            // Update portfolio
+            simulationData.balance += profitLoss;
+            simulationData.totalTrades++;
+            if (isWin) simulationData.wins++;
+            
+            // Record trade
+            const trade = {
+                entry: simulationData.currentPrice,
+                size: positionSize,
+                pnl: profitLoss,
+                isWin: isWin,
+                timestamp: new Date().toLocaleTimeString()
+            };
+            simulationData.trades.push(trade);
+            
+            updatePortfolioDisplay();
+            updateTradeLog();
+            
+            // Generate new price data for next trade
+            generatePriceData();
+        }
+
+        function updatePortfolioDisplay() {
+            document.getElementById('current-balance').textContent = `$${simulationData.balance.toLocaleString()}`;
+            
+            const totalPnL = simulationData.balance - simulationData.startingBalance;
+            const pnlElement = document.getElementById('total-pnl');
+            pnlElement.textContent = `$${totalPnL.toLocaleString()}`;
+            pnlElement.className = totalPnL >= 0 ? 'font-semibold text-green-600' : 'font-semibold text-red-600';
+            
+            const winRate = simulationData.totalTrades > 0 ? 
+                Math.round((simulationData.wins / simulationData.totalTrades) * 100) : 0;
+            document.getElementById('win-rate').textContent = `${winRate}%`;
+        }
+
+        function updateTradeLog() {
+            const tradeLog = document.getElementById('trade-log');
+            const recentTrades = simulationData.trades.slice(-5).reverse();
+            
+            tradeLog.innerHTML = recentTrades.map(trade => `
+                <div class="p-3 bg-gray-50 rounded-lg text-sm">
+                    <div class="flex justify-between items-center">
+                        <span>${trade.timestamp}</span>
+                        <span class="${trade.isWin ? 'text-green-600' : 'text-red-600'}">
+                            ${trade.isWin ? 'WIN' : 'LOSS'}: $${trade.pnl.toLocaleString()}
+                        </span>
+                    </div>
+                    <div class="text-gray-600 mt-1">
+                        Entry: $${trade.entry} | Size: ${trade.size} shares
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function resetSimulation() {
+            simulationData = {
+                balance: 10000,
+                startingBalance: 10000,
+                trades: [],
+                wins: 0,
+                totalTrades: 0,
+                currentPrice: 100,
+                isRunning: false
+            };
+            
+            updatePortfolioDisplay();
+            document.getElementById('trade-log').innerHTML = `
+                <div class="text-sm text-gray-500 text-center py-4">
+                    No trades yet. Start simulation to begin.
+                </div>
+            `;
+        }
+
+        function updateRiskDisplay() {
+            const riskPercentage = document.getElementById('risk-percentage').value;
+            document.getElementById('risk-display').textContent = `${riskPercentage}%`;
+        }
+
+        function calculatePositionSize() {
+            const accountSize = parseFloat(document.getElementById('account-size').value);
+            const riskPercent = parseFloat(document.getElementById('risk-percent').value);
+            const entryPrice = parseFloat(document.getElementById('entry-price').value);
+            const stopPrice = parseFloat(document.getElementById('stop-price').value);
+            
+            const riskAmount = accountSize * (riskPercent / 100);
+            const riskPerShare = Math.abs(entryPrice - stopPrice);
+            const positionSize = Math.floor(riskAmount / riskPerShare);
+            const positionValue = positionSize * entryPrice;
+            
+            document.getElementById('risk-amount').textContent = `$${riskAmount.toLocaleString()}`;
+            document.getElementById('position-size').textContent = positionSize.toLocaleString();
+            document.getElementById('position-value').textContent = `$${positionValue.toLocaleString()}`;
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('lesson-progress').textContent = percentage;
+            
+            // SCORM: Update progress
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_location', 'chapter7');
+                SCORM.set('cmi.core.lesson_status', percentage === 100 ? 'completed' : 'incomplete');
+            }
+        }
+
+        function nextChapter() {
+            updateProgress(100);
+            window.location.href = 'chapter8.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            calculatePositionSize();
+            updateProgress(80); // Mark as advanced
+        });
+    </script>
+</body>
+</html>

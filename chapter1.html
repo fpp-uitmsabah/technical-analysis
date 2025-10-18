@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: Introduction to Technical Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .lesson-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .lesson-content.active { max-height: 1000px; }
+        .quiz-option { transition: all 0.2s ease; }
+        .quiz-option:hover { background-color: #f3f4f6; }
+        .quiz-option.selected { background-color: #dbeafe; border-color: #3b82f6; }
+        .quiz-option.correct { background-color: #dcfce7; border-color: #16a34a; }
+        .quiz-option.incorrect { background-color: #fee2e2; border-color: #dc2626; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Chapter 1: Introduction to Technical Analysis</h1>
+                        <p class="text-sm text-gray-600">Lesson 1 of 3</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span id="lesson-progress">0%</span> Complete
+                    </div>
+                    <button onclick="toggleMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 33%" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Lesson Content -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-lightbulb text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">What is Technical Analysis?</h2>
+                        <p class="text-gray-600">Understanding the foundation of market analysis</p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        Technical analysis is a trading discipline that evaluates investments and identifies trading opportunities by analyzing statistical trends gathered from trading activity, such as price movement and volume. Unlike fundamental analysis, which focuses on a company's financial health and intrinsic value, technical analysis examines price charts, patterns, indicators, and market sentiment to predict future price movements.
+                    </p>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-blue-900 mb-3">Three Core Assumptions</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <span class="text-white text-xs font-bold">1</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-blue-900">Market Discounts Everything</h4>
+                                    <p class="text-blue-800">All known information is already reflected in price</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <span class="text-white text-xs font-bold">2</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-blue-900">Price Moves in Trends</h4>
+                                    <p class="text-blue-800">Once a trend is established, it tends to continue</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <span class="text-white text-xs font-bold">3</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-blue-900">History Tends to Repeat</h4>
+                                    <p class="text-blue-800">Market patterns and cycles repeat over time</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        This approach enables technical analysts to use historical price data to predict future market behavior with statistical probability. By focusing on price action rather than fundamental factors, technical analysis provides a framework for timing market entries and exits based on observable patterns and trends.
+                    </p>
+                </div>
+
+                <!-- Interactive Example -->
+                <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Interactive Example: Price Trend Analysis</h3>
+                    <div id="price-chart" class="w-full h-64"></div>
+                    <p class="text-sm text-gray-600 mt-3">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        This chart shows how technical analysts identify trends and patterns in price movements to predict future direction.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-question-circle text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Knowledge Check</h3>
+                        <p class="text-gray-600">Test your understanding</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6" id="quiz-container">
+                    <div class="quiz-question" data-question="1">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">What is the primary focus of technical analysis?</h4>
+                        <div class="space-y-3">
+                            <div class="quiz-option border border-gray-200 rounded-lg p-4 cursor-pointer" data-answer="a">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                                    </div>
+                                    <span>Company financial statements and intrinsic value</span>
+                                </div>
+                            </div>
+                            <div class="quiz-option border border-gray-200 rounded-lg p-4 cursor-pointer" data-answer="b">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                                    </div>
+                                    <span>Price charts, patterns, and market sentiment</span>
+                                </div>
+                            </div>
+                            <div class="quiz-option border border-gray-200 rounded-lg p-4 cursor-pointer" data-answer="c">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                                    </div>
+                                    <span>Economic indicators and market fundamentals</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback hidden mt-4 p-4 rounded-lg"></div>
+                    </div>
+
+                    <div class="quiz-question hidden" data-question="2">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Which assumption states that all known information is already reflected in price?</h4>
+                        <div class="space-y-3">
+                            <div class="quiz-option border border-gray-200 rounded-lg p-4 cursor-pointer" data-answer="a">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                                    </div>
+                                    <span>Price moves in trends</span>
+                                </div>
+                            </div>
+                            <div class="quiz-option border border-gray-200 rounded-lg p-4 cursor-pointer" data-answer="b">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                                    </div>
+                                    <span>Market discounts everything</span>
+                                </div>
+                            </div>
+                            <div class="quiz-option border border-gray-200 rounded-lg p-4 cursor-pointer" data-answer="c">
+                                <div class="flex items-center">
+                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-blue-600 rounded-full hidden"></div>
+                                    </div>
+                                    <span>History tends to repeat itself</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback hidden mt-4 p-4 rounded-lg"></div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mt-8">
+                    <div class="text-sm text-gray-600">
+                        Question <span id="current-question">1</span> of <span id="total-questions">2</span>
+                    </div>
+                    <div class="space-x-3">
+                        <button id="prev-btn" onclick="previousQuestion()" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 hidden">
+                            Previous
+                        </button>
+                        <button id="next-btn" onclick="nextQuestion()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Next Question
+                        </button>
+                        <button id="complete-btn" onclick="completeLesson()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 hidden">
+                            Complete Lesson
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center">
+            <button onclick="goBack()" class="flex items-center text-gray-600 hover:text-gray-900">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Course
+            </button>
+            <button onclick="nextLesson()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Next Lesson
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let quizAnswers = {};
+        let lessonProgress = 0;
+
+        const quizData = [
+            {
+                question: "What is the primary focus of technical analysis?",
+                options: [
+                    { text: "Company financial statements and intrinsic value", correct: false },
+                    { text: "Price charts, patterns, and market sentiment", correct: true },
+                    { text: "Economic indicators and market fundamentals", correct: false }
+                ],
+                feedback: "Technical analysis focuses on price charts, patterns, and market sentiment rather than fundamental factors."
+            },
+            {
+                question: "Which assumption states that all known information is already reflected in price?",
+                options: [
+                    { text: "Price moves in trends", correct: false },
+                    { text: "Market discounts everything", correct: true },
+                    { text: "History tends to repeat itself", correct: false }
+                ],
+                feedback: "The 'market discounts everything' assumption means all known information is already reflected in current prices."
+            }
+        ];
+
+        function initializeChart() {
+            const dates = [];
+            const prices = [];
+            const trend = [];
+            
+            // Generate sample price data
+            let basePrice = 100;
+            for (let i = 0; i < 30; i++) {
+                dates.push(`Day ${i + 1}`);
+                basePrice += (Math.random() - 0.5) * 5;
+                prices.push(basePrice);
+                trend.push(100 + i * 0.5); // Upward trend
+            }
+
+            const trace1 = {
+                x: dates,
+                y: prices,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Price',
+                line: { color: '#3b82f6', width: 2 }
+            };
+
+            const trace2 = {
+                x: dates,
+                y: trend,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Trend',
+                line: { color: '#16a34a', width: 2, dash: 'dash' }
+            };
+
+            const layout = {
+                title: 'Price Trend Analysis',
+                xaxis: { title: 'Time Period' },
+                yaxis: { title: 'Price ($)' },
+                showlegend: true,
+                margin: { t: 40, r: 40, b: 40, l: 60 }
+            };
+
+            Plotly.newPlot('price-chart', [trace1, trace2], layout, {responsive: true});
+        }
+
+        function initializeQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            const totalQuestions = questions.length;
+            
+            document.getElementById('total-questions').textContent = totalQuestions;
+            
+            // Add click handlers to quiz options
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    selectOption(this);
+                });
+            });
+        }
+
+        function selectOption(option) {
+            const question = option.closest('.quiz-question');
+            const questionIndex = parseInt(question.dataset.question) - 1;
+            
+            // Remove previous selections
+            question.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.querySelector('.w-2').classList.add('hidden');
+            });
+            
+            // Select current option
+            option.classList.add('selected');
+            option.querySelector('.w-2').classList.remove('hidden');
+            
+            // Store answer
+            const answer = option.dataset.answer;
+            quizAnswers[questionIndex] = answer;
+            
+            // Enable next button
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            const currentQuestion = document.querySelector('.quiz-question:not(.hidden)');
+            const feedback = currentQuestion.querySelector('.quiz-feedback');
+            const selectedOption = currentQuestion.querySelector('.quiz-option.selected');
+            
+            if (!selectedOption) {
+                alert('Please select an answer before continuing.');
+                return;
+            }
+            
+            // Check answer and show feedback
+            const questionIndex = parseInt(currentQuestion.dataset.question) - 1;
+            const isCorrect = checkAnswer(questionIndex, selectedOption.dataset.answer);
+            
+            showFeedback(feedback, isCorrect, quizData[questionIndex].feedback);
+            
+            // Move to next question or complete quiz
+            setTimeout(() => {
+                if (currentQuestionIndex < quizData.length - 1) {
+                    currentQuestionIndex++;
+                    showQuestion(currentQuestionIndex);
+                } else {
+                    completeQuiz();
+                }
+            }, 2000);
+        }
+
+        function checkAnswer(questionIndex, answer) {
+            const correctAnswer = ['b', 'b'][questionIndex]; // Correct answers
+            return answer === correctAnswer;
+        }
+
+        function showFeedback(feedbackElement, isCorrect, message) {
+            feedbackElement.classList.remove('hidden');
+            feedbackElement.textContent = message;
+            
+            if (isCorrect) {
+                feedbackElement.className = 'quiz-feedback mt-4 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800';
+            } else {
+                feedbackElement.className = 'quiz-feedback mt-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800';
+            }
+        }
+
+        function showQuestion(index) {
+            // Hide all questions
+            document.querySelectorAll('.quiz-question').forEach(q => q.classList.add('hidden'));
+            
+            // Show current question
+            const questions = document.querySelectorAll('.quiz-question');
+            if (questions[index]) {
+                questions[index].classList.remove('hidden');
+            }
+            
+            // Update progress
+            document.getElementById('current-question').textContent = index + 1;
+            
+            // Update buttons
+            document.getElementById('prev-btn').classList.toggle('hidden', index === 0);
+            document.getElementById('next-btn').classList.toggle('hidden', index === quizData.length - 1);
+            document.getElementById('complete-btn').classList.toggle('hidden', index !== quizData.length - 1);
+        }
+
+        function completeQuiz() {
+            const score = Object.keys(quizAnswers).length;
+            
+            // SCORM: Track quiz completion
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.score.raw', score);
+                SCORM.set('cmi.interactions.n.id', 'quiz_ch1_l1');
+                SCORM.set('cmi.interactions.n.type', 'choice');
+                SCORM.set('cmi.interactions.n.correct_responses.n.pattern', 'b,b');
+            }
+            
+            alert(`Quiz completed! Score: ${score}/${quizData.length}`);
+            updateProgress(100);
+        }
+
+        function updateProgress(percentage) {
+            lessonProgress = percentage;
+            document.getElementById('lesson-progress').textContent = percentage;
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            
+            // SCORM: Update progress
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_location', 'chapter1_lesson1');
+                SCORM.set('cmi.core.lesson_status', percentage === 100 ? 'completed' : 'incomplete');
+            }
+        }
+
+        function completeLesson() {
+            updateProgress(100);
+            
+            // SCORM: Mark lesson complete
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_status', 'completed');
+                SCORM.save();
+            }
+            
+            alert('Lesson completed! Well done.');
+        }
+
+        function nextLesson() {
+            window.location.href = 'chapter1_lesson2.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeChart();
+            initializeQuiz();
+            showQuestion(0);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8: Advanced Concepts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .concept-card { transition: all 0.3s ease; }
+        .concept-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .advanced-demo { cursor: pointer; transition: all 0.2s ease; }
+        .advanced-demo:hover { background-color: #f8fafc; }
+        .advanced-demo.active { background-color: #dbeafe; border-color: #3b82f6; }
+        .fibonacci-spiral { background: conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ef4444, #f59e0b, #10b981, #3b82f6); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-semibold text-gray-900">Chapter 8: Advanced Concepts</h1>
+                        <p class="text-sm text-gray-600">Sophisticated analysis techniques</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <span id="lesson-progress">0%</span> Complete
+                    </div>
+                    <button onclick="toggleMenu()" class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chapter Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mr-6">
+                        <i class="fas fa-brain text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Advanced Concepts</h1>
+                        <p class="text-lg text-gray-600 mt-2">Sophisticated analysis techniques</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-6 mb-6">
+                    <blockquote class="text-lg italic text-gray-700 text-center">
+                        "The market is not a weighing machine, it's a voting machine. It votes on value, but it weighs reality."
+                    </blockquote>
+                    <p class="text-sm text-gray-600 text-center mt-2">- Benjamin Graham (adapted)</p>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Advanced technical analysis concepts build upon fundamental principles to provide deeper market insights. These sophisticated techniques help traders identify complex patterns, market relationships, and timing opportunities that basic analysis might miss.
+                </p>
+            </div>
+        </div>
+
+        <!-- Advanced Concepts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Elliott Wave Theory -->
+            <div class="concept-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-wave-square text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Elliott Wave Theory</h2>
+                            <p class="text-gray-600">Market moves in predictable waves</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-blue-900 mb-3">Basic Principle</h4>
+                            <p class="text-blue-800 text-sm">
+                                Market prices move in repetitive cycles of 5 waves in the direction of the main trend, followed by 3 corrective waves.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <h5 class="font-semibold text-green-900 mb-2">Impulse Waves (5)</h5>
+                                <div class="text-green-800 text-sm space-y-1">
+                                    <div>• Waves 1, 3, 5: Trend direction</div>
+                                    <div>• Waves 2, 4: Corrections</div>
+                                    <div>• Wave 3 is usually strongest</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h5 class="font-semibold text-red-900 mb-2">Corrective Waves (3)</h5>
+                                <div class="text-red-800 text-sm space-y-1">
+                                    <div>• Waves A, B, C: Against trend</div>
+                                    <div>• Complex corrections possible</div>
+                                    <div>• Wave C often equals Wave A</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h5 class="font-semibold text-gray-900 mb-3">Wave Rules</h5>
+                        <div class="text-gray-700 text-sm space-y-2">
+                            <div>• Wave 2 never retraces more than 100% of Wave 1</div>
+                            <div>• Wave 3 is never the shortest impulse wave</div>
+                            <div>• Wave 4 never overlaps Wave 1 territory</div>
+                            <div>• Alternation: Wave 2 and Wave 4 alternate in complexity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fibonacci Analysis -->
+            <div class="concept-card bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-seedling text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Fibonacci Analysis</h2>
+                            <p class="text-gray-600">Mathematical ratios in nature and markets</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                            <h4 class="font-semibold text-purple-900 mb-3">Key Ratios</h4>
+                            <div class="grid grid-cols-2 gap-4 text-purple-800 text-sm">
+                                <div>
+                                    <div class="font-semibold">Retracements:</div>
+                                    <div>• 23.6%</div>
+                                    <div>• 38.2%</div>
+                                    <div>• 50%</div>
+                                    <div>• 61.8%</div>
+                                </div>
+                                <div>
+                                    <div class="font-semibold">Extensions:</div>
+                                    <div>• 161.8%</div>
+                                    <div>• 261.8%</div>
+                                    <div>• 423.6%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-orange-900 mb-2">Applications</h5>
+                            <div class="text-orange-800 text-sm space-y-1">
+                                <div>• Identify potential support/resistance levels</div>
+                                <div>• Project price targets</div>
+                                <div>• Time analysis with Fibonacci time zones</div>
+                                <div>• Combine with other technical tools</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fibonacci-spiral w-16 h-16 rounded-full mx-auto mb-4"></div>
+                    
+                    <div class="text-center text-sm text-gray-600">
+                        Fibonacci spiral showing natural growth patterns
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Fibonacci Tool -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-ruler text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Interactive Fibonacci Tool</h2>
+                        <p class="text-gray-600">Draw Fibonacci retracements on price charts</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <div id="fibonacci-chart" class="w-full h-80 bg-gray-50 rounded-lg mb-4"></div>
+                        
+                        <div class="flex space-x-4">
+                            <button onclick="generatePriceData()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Generate Data
+                            </button>
+                            <button onclick="drawFibonacci()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                Draw Fibonacci
+                            </button>
+                            <button onclick="clearFibonacci()" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                                Clear Levels
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">Fibonacci Levels</h4>
+                            <div class="space-y-2" id="fib-levels">
+                                <div class="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
+                                    Draw Fibonacci retracements to see levels
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">Trading Signals</h4>
+                            <div id="fib-signals" class="space-y-2">
+                                <div class="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
+                                    Analysis will appear when levels are drawn
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-3">How to Use</h4>
+                            <div class="text-sm text-gray-600 space-y-2">
+                                <p>1. Click "Generate Data" to create price movement</p>
+                                <p>2. Click "Draw Fibonacci" to automatically calculate levels</p>
+                                <p>3. Look for price reactions at key Fibonacci levels</p>
+                                <p>4. Use levels for entry/exit decisions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Profile -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-chart-bar text-indigo-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Market Profile</h2>
+                        <p class="text-gray-600">Understanding price distribution and value areas</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-blue-900 mb-4">Key Concepts</h4>
+                            <div class="space-y-3 text-blue-800 text-sm">
+                                <div class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mr-3 mt-2"></div>
+                                    <div>
+                                        <strong>Value Area:</strong> Where 70% of trading volume occurred
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mr-3 mt-2"></div>
+                                    <div>
+                                        <strong>Point of Control:</strong> Price with highest volume
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full mr-3 mt-2"></div>
+                                    <div>
+                                        <strong>Profile Shape:</strong> Indicates market sentiment
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-green-900 mb-4">Profile Shapes</h4>
+                            <div class="space-y-2 text-green-800 text-sm">
+                                <div><strong>Normal Distribution:</strong> Balanced market</div>
+                                <div><strong>Bell Curve:</strong> Fair value established</div>
+                                <div><strong>Skewed Profile:</strong> Trending market</div>
+                                <div><strong>Double Distribution:</strong> Range-bound market</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-purple-900 mb-4">Trading Applications</h4>
+                            <div class="space-y-2 text-purple-800 text-sm">
+                                <div>• Trade towards the Point of Control</div>
+                                <div>• Use Value Area as support/resistance</div>
+                                <div>• Identify market imbalance</div>
+                                <div>• Time entries with market open/close</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                            <h4 class="font-semibold text-orange-900 mb-4">Advantages</h4>
+                            <div class="space-y-2 text-orange-800 text-sm">
+                                <div>• Shows where market finds value</div>
+                                <div>• Identifies support/resistance levels</div>
+                                <div>• Reveals market structure</div>
+                                <div>• Helps time entries and exits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Volume Profile -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-volume-up text-teal-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Volume Profile</h2>
+                        <p class="text-gray-600">Price levels with highest trading activity</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-mountain text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">High Volume Nodes</h4>
+                        <p class="text-sm text-gray-600">Areas of significant trading activity and potential support/resistance</p>
+                    </div>
+
+                    <div class="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-valley text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Low Volume Nodes</h4>
+                        <p class="text-sm text-gray-600">Areas of low activity where price moves quickly</p>
+                    </div>
+
+                    <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-bullseye text-white text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Point of Control</h4>
+                        <p class="text-sm text-gray-600">Price level with highest volume - market consensus</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-gray-900 mb-4">Volume Profile Trading Strategy</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h5 class="font-semibold text-green-700 mb-2">Bullish Signals</h5>
+                            <div class="text-green-800 text-sm space-y-1">
+                                <div>• Price above Point of Control</div>
+                                <div>• High volume on breakouts</div>
+                                <div>• Low volume on pullbacks</div>
+                                <div>• Value Area acting as support</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-red-700 mb-2">Bearish Signals</h5>
+                            <div class="text-red-800 text-sm space-y-1">
+                                <div>• Price below Point of Control</div>
+                                <div>• High volume on breakdowns</div>
+                                <div>• Low volume on rallies</div>
+                                <div>• Value Area acting as resistance</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intermarket Analysis -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-network-wired text-pink-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Intermarket Analysis</h2>
+                        <p class="text-gray-600">Understanding relationships between different markets</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-blue-900 mb-3">Stocks vs Bonds</h4>
+                        <div class="text-blue-800 text-sm space-y-2">
+                            <div><strong>Positive Correlation:</strong> Risk-on sentiment</div>
+                            <div><strong>Negative Correlation:</strong> Flight to safety</div>
+                            <div><strong>Divergence:</strong> Market turning point</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-green-900 mb-3">USD vs Commodities</h4>
+                        <div class="text-green-800 text-sm space-y-2">
+                            <div><strong>Strong USD:</strong> Lower commodity prices</div>
+                            <div><strong>Weak USD:</strong> Higher commodity prices</div>
+                            <div><strong>Gold:</strong> Inverse relationship</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-purple-900 mb-3">Yield Curve</h4>
+                        <div class="text-purple-800 text-sm space-y-2">
+                            <div><strong>Steepening:</strong> Economic expansion</div>
+                            <div><strong>Flattening:</strong> Economic uncertainty</div>
+                            <div><strong>Inversion:</strong> Recession warning</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-orange-900 mb-3">Sector Rotation</h4>
+                        <div class="text-orange-800 text-sm space-y-2">
+                            <div><strong>Early Cycle:</strong> Technology, Consumer</div>
+                            <div><strong>Mid Cycle:</strong> Industrials, Materials</div>
+                            <div><strong>Late Cycle:</strong> Energy, Utilities</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h4 class="font-semibold text-gray-900 mb-4">Intermarket Analysis Framework</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-chart-line text-white"></i>
+                            </div>
+                            <h5 class="font-semibold text-gray-900 mb-2">Step 1: Market Direction</h5>
+                            <p class="text-sm text-gray-600">Determine overall market trend using broad market indices</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-link text-white"></i>
+                            </div>
+                            <h5 class="font-semibold text-gray-900 mb-2">Step 2: Relationships</h5>
+                            <p class="text-sm text-gray-600">Analyze correlations between different asset classes</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-balance-scale text-white"></i>
+                            </div>
+                            <h5 class="font-semibold text-gray-900 mb-2">Step 3: Confirmation</h5>
+                            <p class="text-sm text-gray-600">Confirm signals across multiple markets before trading</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Candlestick Patterns -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-fire text-yellow-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Advanced Candlestick Patterns</h2>
+                        <p class="text-gray-600">Complex multi-candle formations</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                        <h4 class="font-semibold text-green-900 mb-4">Bullish Reversal</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-800">Morning Star</span>
+                                <span class="text-green-600 text-xs">3-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-800">Three White Soldiers</span>
+                                <span class="text-green-600 text-xs">3-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-800">Bullish Abandoned Baby</span>
+                                <span class="text-green-600 text-xs">3-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-800">Three Inside Up</span>
+                                <span class="text-green-600 text-xs">3-candle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+                        <h4 class="font-semibold text-red-900 mb-4">Bearish Reversal</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800">Evening Star</span>
+                                <span class="text-red-600 text-xs">3-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800">Three Black Crows</span>
+                                <span class="text-red-600 text-xs">3-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800">Bearish Abandoned Baby</span>
+                                <span class="text-red-600 text-xs">3-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800">Three Inside Down</span>
+                                <span class="text-red-600 text-xs">3-candle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h4 class="font-semibold text-gray-900 mb-4">Continuation</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-800">Rising Three Methods</span>
+                                <span class="text-gray-600 text-xs">5-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-800">Falling Three Methods</span>
+                                <span class="text-gray-600 text-xs">5-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-800">Mat Hold</span>
+                                <span class="text-gray-600 text-xs">5-candle</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-800">Separating Lines</span>
+                                <span class="text-gray-600 text-xs">2-candle</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex justify-between items-center">
+            <button onclick="goBack()" class="flex items-center text-gray-600 hover:text-gray-900">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Course
+            </button>
+            <button onclick="nextChapter()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Complete Course
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let fibonacciLevels = [];
+        let priceData = null;
+
+        function drawFibonacci() {
+            if (!priceData) {
+                alert('Please generate price data first');
+                return;
+            }
+            
+            const prices = priceData.prices;
+            const high = Math.max(...prices);
+            const low = Math.min(...prices);
+            const range = high - low;
+            
+            // Calculate Fibonacci levels
+            const levels = [
+                { ratio: 0, price: high, name: 'High' },
+                { ratio: 0.236, price: high - range * 0.236, name: '23.6%' },
+                { ratio: 0.382, price: high - range * 0.382, name: '38.2%' },
+                { ratio: 0.5, price: high - range * 0.5, name: '50%' },
+                { ratio: 0.618, price: high - range * 0.618, name: '61.8%' },
+                { ratio: 0.786, price: high - range * 0.786, name: '78.6%' },
+                { ratio: 1, price: low, name: 'Low' }
+            ];
+            
+            fibonacciLevels = levels;
+            
+            // Add Fibonacci lines to chart
+            const shapes = levels.map(level => ({
+                type: 'line',
+                x0: 0,
+                x1: 1,
+                xref: 'paper',
+                y0: level.price,
+                y1: level.price,
+                line: {
+                    color: level.name === 'High' || level.name === 'Low' ? '#ef4444' : '#10b981',
+                    width: level.name === 'High' || level.name === 'Low' ? 2 : 1,
+                    dash: 'dash'
+                }
+            }));
+            
+            Plotly.relayout('fibonacci-chart', { shapes });
+            updateFibonacciLevels();
+            updateFibonacciSignals();
+        }
+
+        function updateFibonacciLevels() {
+            const levelsContainer = document.getElementById('fib-levels');
+            levelsContainer.innerHTML = fibonacciLevels.map(level => `
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span class="font-medium">${level.name}</span>
+                    <span class="text-gray-600">$${level.price.toFixed(2)}</span>
+                </div>
+            `).join('');
+        }
+
+        function updateFibonacciSignals() {
+            const signalsContainer = document.getElementById('fib-signals');
+            const currentPrice = priceData.prices[priceData.prices.length - 1];
+            
+            // Find nearest Fibonacci levels
+            const below = fibonacciLevels.filter(l => l.price <= currentPrice).pop();
+            const above = fibonacciLevels.filter(l => l.price > currentPrice)[0];
+            
+            signalsContainer.innerHTML = `
+                <div class="p-3 bg-blue-50 rounded-lg">
+                    <div class="font-semibold text-blue-900 mb-2">Current Price: $${currentPrice.toFixed(2)}</div>
+                    <div class="text-blue-800 text-sm space-y-1">
+                        <div>• Support at: ${below ? below.name + ' ($' + below.price.toFixed(2) + ')' : 'N/A'}</div>
+                        <div>• Resistance at: ${above ? above.name + ' ($' + above.price.toFixed(2) + ')' : 'N/A'}</div>
+                        <div>• Watch for price reactions at these levels</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function clearFibonacci() {
+            fibonacciLevels = [];
+            Plotly.relayout('fibonacci-chart', { shapes: [] });
+            
+            document.getElementById('fib-levels').innerHTML = `
+                <div class="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
+                    Draw Fibonacci retracements to see levels
+                </div>
+            `;
+            
+            document.getElementById('fib-signals').innerHTML = `
+                <div class="p-3 bg-gray-50 rounded-lg text-sm text-gray-600">
+                    Analysis will appear when levels are drawn
+                </div>
+            `;
+        }
+
+        function generatePriceData() {
+            const dates = [];
+            const prices = [];
+            let basePrice = 100;
+            
+            // Generate price data with clear high and low
+            for (let i = 0; i < 50; i++) {
+                dates.push(`Day ${i + 1}`);
+                
+                if (i < 20) {
+                    basePrice += Math.random() * 2; // Uptrend
+                } else if (i < 30) {
+                    basePrice -= Math.random() * 3; // Downtrend
+                } else {
+                    basePrice += (Math.random() - 0.5) * 2; // Consolidation
+                }
+                
+                prices.push(basePrice);
+            }
+            
+            priceData = { dates, prices };
+            
+            const trace = {
+                x: dates,
+                y: prices,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Price',
+                line: { color: '#3b82f6', width: 2 },
+                marker: { size: 4 }
+            };
+
+            const layout = {
+                title: 'Price Chart with Fibonacci Levels',
+                xaxis: { title: 'Time Period' },
+                yaxis: { title: 'Price ($)' },
+                showlegend: false,
+                margin: { t: 40, r: 40, b: 40, l: 60 }
+            };
+
+            Plotly.newPlot('fibonacci-chart', [trace], layout, {responsive: true});
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('lesson-progress').textContent = percentage;
+            
+            // SCORM: Update progress
+            if (typeof SCORM !== 'undefined') {
+                SCORM.set('cmi.core.lesson_location', 'chapter8');
+                SCORM.set('cmi.core.lesson_status', percentage === 100 ? 'completed' : 'incomplete');
+            }
+        }
+
+        function nextChapter() {
+            updateProgress(100);
+            window.location.href = 'chapter9.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress(90); // Mark as advanced
+        });
+    </script>
+</body>
+</html>
